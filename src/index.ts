@@ -1,4 +1,14 @@
-import { db, env_app } from "./server";
+import { connectDb } from "./db/connect";
+import CONFIGURATION from "./config/config";
+import { app } from "./server";
 
-console.log(env_app);
-console.log(db);
+const { app: env_app } = CONFIGURATION;
+
+connectDb()
+  .then(() => {
+    console.log("Database connected!");
+    app.listen(env_app.PORT, () => {
+      console.log("Application running on port " + env_app.PORT);
+    });
+  })
+  .catch((err) => console.error(err));

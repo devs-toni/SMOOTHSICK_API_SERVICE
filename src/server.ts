@@ -1,15 +1,16 @@
+import CONFIGURATION, { ENV } from "./config/config"
+import { loggerStream } from "./config/logger/winston"
+import { AdminRouter } from "./router/AdminRouter";
 const express = require("express")
 const helmet = require("helmet")
 const cors = require("cors")
 const path = require("path")
 const morgan = require("morgan")
 require("dotenv").config()
-import CONFIGURATION, { ENV } from "./config/config"
-import { loggerStream } from "./config/logger/winston"
 
-export const { app: env_app, db } = CONFIGURATION
+export const { app: env_app } = CONFIGURATION
 
-const app = express()
+export const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -24,7 +25,11 @@ app.use(morgan(
 ))
 
 app.use(helmet())
-app.use(express.json())
+app.use(express.json());
+app.use("/admin", AdminRouter);
+
+
+
 
 
 

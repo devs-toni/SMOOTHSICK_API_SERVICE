@@ -6,5 +6,5 @@ import { Router } from "express";
 
 export const AdminRouter = Router();
 
-AdminRouter.get('/', AdminController.batch);
-AdminRouter.get('/deezerCode', AdminController.deezerCode);
+
+AdminRouter.get('/reload', AdminController.reload);

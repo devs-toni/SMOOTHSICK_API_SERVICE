@@ -5,6 +5,7 @@ import { IArtist } from "../models/Artist";
 
 export const AdminController = {
   reload: async (req: Request, res: Response) => {
+    
     const ourArtists: string[] = [
       "271722", //Manel
       "5541552", //Oques Grasses

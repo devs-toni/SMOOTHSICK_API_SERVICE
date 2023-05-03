@@ -12,7 +12,7 @@ import { PlaylistRepository } from "../repository/PlaylistRepository";
 
 export const AdminController = {
   reload: async (req: Request, res: Response) => {
-    const selectedArtists: string[] = [
+    /* const selectedArtists: string[] = [
       "271722", //Manel
       "5541552", //Oques Grasses
       "4474", //Estopa
@@ -34,16 +34,16 @@ export const AdminController = {
       "447246", //Abel Pintos
       "1424821", //Lana del Rey
       "75798", //Adele
-      "405", //Johnnt Cash
+      "405", //Johnny Cash
       "13", //Eminem
       "542", //David Guetta
-      "259", //Micheal Jackson
       "4020872", //Kadebostany
       "133863", //Brejcha
       "1018354", //Jaden
       "567442", //Synapson
       "4443465", //David Kushneir
       "4794268", //Liam Payne
+      "4762", //Bruce
     ];
 
     const selectedAlbums: string[] = [
@@ -153,6 +153,28 @@ export const AdminController = {
       "11107272",
       "104660202", //Frank Ocean
       "9908666",
+      "11429810", //Eminem
+      "247208",
+      "14638278",
+      "72000342",
+      "6103175", //Lana del Rey
+      "420368197",
+      "267169752",
+      "215960112",
+      "430178", //David Guetta
+      "511046",
+      "304150",
+      "7452568", //Johnny Cash
+      "7452480",
+      "7463537",
+      "7458441",
+      "1419968", //Bruce
+      "72804852",
+      "1440805",
+      "273425942", //Adele
+      "14880539",
+      "746059",
+      "105781",
     ];
 
     const selectedPlaylists: string[] = [
@@ -230,41 +252,110 @@ export const AdminController = {
       "6708652884", //Frank Ocean
       "1786922822",
       "2578576804",
+      "7662551722", //Eminem
+      "3645740262",
+      "1724212365",
+      "1264577943",
+      "9372936102", //Lana del Rey
+      "1976454162",
+      "3110419262",
+      "10820031362",
+      "3067981882", //David Guetta
+      "706093725",
+      "10292644142",
+      "1479458365",
+      "339301555", //Johnny Cash
+      "7848489282",
+      "3181211662",
+      "5747086942",
+      "5313870662", //Bruce
+      "1306931615",
+      "4068687546",
+      "715215865", //Adele
+      "3110429622",
+      "1282483245",
     ];
 
-    //const artistsDeleted = await ArtistRepository.deleteAll();
-    //const albumsDeleted = await AlbumRepository.deleteAll();
-    //const tracksDeleted = await TrackRepository.deleteAll();
-    //const playlistsDeleted = await PlaylistRepository.deleteAll();
+    const artistsDeleted = await ArtistRepository.deleteAll();
+    const albumsDeleted = await AlbumRepository.deleteAll();
+    const tracksDeleted = await TrackRepository.deleteAll();
+    const playlistsDeleted = await PlaylistRepository.deleteAll();
 
-    //if (artistsDeleted && albumsDeleted && playlistsDeleted && tracksDeleted) {
-    await Promise.all(
-      selectedArtists.map(async (artistId) => {
-        await axios
-          .get(`https://api.deezer.com/artist/${artistId}`)
-          .then(async ({ data }) => {
-            const artist: IArtist = {
-              id: data.id,
-              name: data.name,
-              picture: data.picture_xl,
-              nb_album: data.nb_album,
-              nb_fan: data.nb_fan,
-            };
-            await ArtistRepository.save(artist);
-          });
-      })
-    );
+    if (artistsDeleted && albumsDeleted && playlistsDeleted && tracksDeleted) {
+      await Promise.all(
+        selectedArtists.map(async (artistId) => {
+          await axios
+            .get(`https://api.deezer.com/artist/${artistId}`)
+            .then(async ({ data }) => {
+              const artist: IArtist = {
+                id: data.id,
+                name: data.name,
+                picture: data.picture_xl,
+                nb_album: data.nb_album,
+                nb_fan: data.nb_fan,
+              };
+              await ArtistRepository.save(artist);
+            });
+        })
+      );
 
-    await Promise.all(
-      selectedAlbums.map(async (albumId) => {
-        await axios
-          .get(`https://api.deezer.com/album/${albumId}`)
-          .then(async (response) => {
-            await axios.get(response.data.tracklist).then(async ({ data }) => {
-              //SAVE ALBUM TRACKS
-              const tracklist = data.data;
+      await Promise.all(
+        selectedAlbums.map(async (albumId) => {
+          await axios
+            .get(`https://api.deezer.com/album/${albumId}`)
+            .then(async (response) => {
+              await axios
+                .get(response.data.tracklist)
+                .then(async ({ data }) => {
+                  //SAVE ALBUM TRACKS
+                  const tracklist = data.data;
+                  tracklist.map(async (tr: ITrack) => {
+                    //console.log(tr);
+                    const track: ITrack = {
+                      id: tr.id,
+                      readable: tr.readable,
+                      title: tr.title,
+                      title_short: tr.title_short,
+                      duration: tr.duration,
+                      track_position: tr.track_position,
+                      disk_number: tr.disk_number,
+                      rank: tr.rank,
+                      preview: tr.preview,
+                      artist_id: tr.artist!.id,
+                      album_id: albumId,
+                    };
+                    await TrackRepository.save(track);
+                  });
+                });
+
+              //SAVE ALBUM
+              const album: IAlbum = {
+                id: response.data.id,
+                title: response.data.title,
+                label: response.data.label,
+                upc: response.data.upc,
+                cover: response.data.cover_xl,
+                nb_tracks: response.data.nb_tracks,
+                duration: response.data.duration,
+                fans: response.data.fans,
+                release_date: response.data.release_date,
+                artist_id: response.data.artist.id,
+              };
+              await AlbumRepository.save(album);
+            });
+        })
+      );
+
+      await Promise.all(
+        selectedPlaylists.map(async (playlistId) => {
+          await axios
+            .get(`https://api.deezer.com/playlist/${playlistId}`)
+            .then(async ({ data }) => {
+              //SAVE PLAYLIST TRACKS
+              const tracks: string[] = [];
+              const tracklist = data.tracks.data;
+              console.log(tracklist);
               tracklist.map(async (tr: ITrack) => {
-                //console.log(tr);
                 const track: ITrack = {
                   id: tr.id,
                   readable: tr.readable,
@@ -276,74 +367,29 @@ export const AdminController = {
                   rank: tr.rank,
                   preview: tr.preview,
                   artist_id: tr.artist!.id,
-                  album_id: albumId,
+                  album_id: tr.album!.id,
                 };
+                tracks.push(tr.id);
                 await TrackRepository.save(track);
               });
-            });
 
-            //SAVE ALBUM
-            const album: IAlbum = {
-              id: response.data.id,
-              title: response.data.title,
-              label: response.data.label,
-              upc: response.data.upc,
-              cover: response.data.cover_xl,
-              nb_tracks: response.data.nb_tracks,
-              duration: response.data.duration,
-              fans: response.data.fans,
-              release_date: response.data.release_date,
-              artist_id: response.data.artist.id,
-            };
-            await AlbumRepository.save(album);
-          });
-      })
-    );
-
-    await Promise.all(
-      selectedPlaylists.map(async (playlistId) => {
-        await axios
-          .get(`https://api.deezer.com/playlist/${playlistId}`)
-          .then(async ({ data }) => {
-            //SAVE PLAYLIST TRACKS
-            const tracks: string[] = [];
-            const tracklist = data.tracks.data;
-            console.log(tracklist);
-            tracklist.map(async (tr: ITrack) => {
-              const track: ITrack = {
-                id: tr.id,
-                readable: tr.readable,
-                title: tr.title,
-                title_short: tr.title_short,
-                duration: tr.duration,
-                track_position: tr.track_position,
-                disk_number: tr.disk_number,
-                rank: tr.rank,
-                preview: tr.preview,
-                artist_id: tr.artist!.id,
-                album_id: tr.album!.id,
+              //SAVE PLAYLIST
+              const playlist: IPlaylist = {
+                id: data.id,
+                title: data.title,
+                description: data.description,
+                duration: data.duration,
+                nb_tracks: data.nb_tracks,
+                picture: data.picture_xl,
+                fans: data.fans,
+                tracklist: tracks,
+                creator_id: data.creator.id,
               };
-              tracks.push(tr.id);
-              await TrackRepository.save(track);
+              await PlaylistRepository.save(playlist);
             });
-
-            //SAVE PLAYLIST
-            const playlist: IPlaylist = {
-              id: data.id,
-              title: data.title,
-              description: data.description,
-              duration: data.duration,
-              nb_tracks: data.nb_tracks,
-              picture: data.picture_xl,
-              fans: data.fans,
-              tracklist: tracks,
-              creator_id: data.creator.id,
-            };
-            await PlaylistRepository.save(playlist);
-          });
-      })
-    );
-    res.redirect("http://localhost:5173/account");
-    //}
+        })
+      );
+      res.redirect("http://localhost:5173/account");
+    } */
   },
 };

@@ -1,6 +1,3 @@
-/* export const AdminRouter = {
-
-} */
 import { AdminController } from "../controller/AdminController";
 import { Router } from "express";
 

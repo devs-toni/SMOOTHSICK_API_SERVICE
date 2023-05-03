@@ -1,3 +1,3 @@
-export const ArtistRouter = {
-  
-}
+import { Router } from "express";
+
+export const ArtistRouter = Router();

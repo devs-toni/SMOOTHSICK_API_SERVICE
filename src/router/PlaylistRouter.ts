@@ -1,3 +1,3 @@
-export const PlaylistRouter = {
-  
-}
+import { Router } from "express";
+
+export const PlaylistRouter = Router();

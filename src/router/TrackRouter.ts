@@ -1,3 +1,3 @@
-export const TrackRouter = {
-  
-}
+import { Router } from "express";
+
+export const TrackRouter = Router();

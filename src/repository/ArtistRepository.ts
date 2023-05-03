@@ -3,11 +3,14 @@ import { ArtistModel } from "./schemas/Artist";
 
 export const ArtistRepository = {
   save: async (artist: IArtist) => {
-    const createdArtist = await ArtistModel.create(artist);
+    const artistExist = await ArtistModel.findOne({ id: artist.id });
+    if (!artistExist) {
+      return await ArtistModel.create(artist);
+    }
   },
 
   deleteAll: async () => {
     const areDeleted = await ArtistModel.deleteMany({});
     return areDeleted.acknowledged;
-  }
+  },
 };

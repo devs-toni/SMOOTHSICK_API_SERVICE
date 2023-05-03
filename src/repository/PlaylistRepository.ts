@@ -3,7 +3,10 @@ import { PlaylistModel } from "./schemas/Playlist";
 
 export const PlaylistRepository = {
   save: async (playlist: IPlaylist) => {
-    const createdPlaylist = await PlaylistModel.create(playlist);
+    const playlistExists = await PlaylistModel.findOne({ id: playlist.id });
+    if (!playlistExists) {
+      return await PlaylistModel.create(playlist);
+    }
   },
   deleteAll: async () => {
     const areDeleted = await PlaylistModel.deleteMany({});

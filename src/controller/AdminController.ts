@@ -20,11 +20,16 @@ export const AdminController = {
       "1216573", //Los Chikos del Maíz
       "10583405", //Bad Bunny
       "11559031", //Manuel Turizo
+      "5536564", //Arcangel
+      "4937383", //Ozuna
       "8706544", //Dua Lipa
       "4050205", //The Weeknd
       "1350335", //Frank Ocean
       "12918", //La Renga
       "412", //Queen
+      "75041", //Spinneta
+      "12135", //Los Redondos
+      "4345", //Soda Stereo
       "12562316", //ACDC
       "447246", //Abel Pintos
       "1424821", //Lana del Rey
@@ -61,6 +66,93 @@ export const AdminController = {
       "12992434",
       "9074561",
       "111441922",
+      "6983518", //Abel pintos
+      "229897402",
+      "11220222",
+      "109441", //La Renga
+      "418462937",
+      "392047297",
+      "14713576", //Spinneta
+      "1219410",
+      "60542682", //Kadebostany
+      "60450782",
+      "7047708",
+      "135664792",
+      "42846911",
+      "75621062", //Queen
+      "1121401",
+      "1127912",
+      "725250",
+      "307493027", //Boris Brejcha
+      "268407112",
+      "149906472",
+      "127191422",
+      "83742072",
+      "168869212", //Jaden
+      "251504582",
+      "101993112",
+      "101993232",
+      "78523082",
+      "1214583", //Soda Stereo
+      "382011",
+      "1222448",
+      "369513367", //Synapson
+      "188601072",
+      "57380772",
+      "11211508",
+      "13554281",
+      "355024757", //David Krushner
+      "180947052",
+      "134433962",
+      "177707832", //Liam Payne
+      "140571342",
+      "129700992",
+      "71062882",
+      "414723077", //Tiesto
+      "393657177",
+      "147374822",
+      "127777432",
+      "63778112",
+      "44693231", //Los Redondos
+      "44693221",
+      "44701181",
+      "44701201",
+      "44693211",
+      "381907637", //Arcangel
+      "257250872",
+      "176764842",
+      "123833872",
+      "66551442",
+      "185526292", //ACDC
+      "9358032",
+      "9410112",
+      "9410116",
+      "9410114",
+      "359058387", //Ozuna
+      "170109192",
+      "71435252",
+      "46000842",
+      "316164367", //Bad Bunny
+      "188972392",
+      "133878352",
+      "101490842",
+      "82541262",
+      "411961147", //Manuel Turizo
+      "219594972",
+      "104104162",
+      "137765312",
+      "169258072", //Dua Lipa
+      "182811182",
+      "205640032",
+      "42194891",
+      "75775892",
+      "285758422", //The Weeknd
+      "137272602",
+      "139881992",
+      "14652356",
+      "11107272",
+      "104660202", //Frank Ocean
+      "9908666",
     ];
 
     const selectedPlaylists: string[] = [
@@ -83,6 +175,61 @@ export const AdminController = {
       "5715007062", //Los Chikos del Maíz
       "2935020182",
       "5510650262",
+      "7789603502", //Abel Pintos
+      "2345677726",
+      "8318921922", //La Renga
+      "4454284108",
+      "8350625762", //Spinneta
+      "7151056644",
+      "7615940662", //Kadebostany
+      "1103656501",
+      "10976539162",
+      "378243195", //Queen
+      "4696861764",
+      "2021502402", //Boris Brejcha
+      "1275756721",
+      "8766345562", //Jade
+      "2935020182",
+      "4943725304",
+      "1728268443", //Soda Stereo
+      "781612175", //Synapson
+      "7615948702",
+      "7664377462",
+      "53362031", //David Krushner
+      "4403076402",
+      "9346933942",
+      "915487765", //Liam Payne
+      "7615942042",
+      "4888783264",
+      "7615937942", //Tiesto
+      "7206054584",
+      "3132456982",
+      "8315163282", //Los Redondos
+      "8873112222",
+      "8182318922", //Arcangel
+      "5160010784",
+      "8186437902",
+      "1286722045", //ACDC
+      "3126664682",
+      "4820458864", //Ozuna
+      "8103909742",
+      "178699142",
+      "4962683744", //Bad Bunny
+      "8399202022",
+      "5215365588",
+      "1650848163", //Manuel Turizo
+      "7427031844",
+      "10292644142",
+      "4880867664", //Dua Lipa
+      "7836095362",
+      "1479458365",
+      "1282483245",
+      "2098157264", //The Weeknd
+      "3110422662",
+      "1479458365",
+      "6708652884", //Frank Ocean
+      "1786922822",
+      "2578576804",
     ];
 
     //const artistsDeleted = await ArtistRepository.deleteAll();
@@ -117,7 +264,7 @@ export const AdminController = {
               //SAVE ALBUM TRACKS
               const tracklist = data.data;
               tracklist.map(async (tr: ITrack) => {
-                console.log(tr);
+                //console.log(tr);
                 const track: ITrack = {
                   id: tr.id,
                   readable: tr.readable,
@@ -153,49 +300,49 @@ export const AdminController = {
       })
     );
 
-    /*  await Promise.all(
-        selectedPlaylists.map(async (playlistId) => {
-          await axios
-            .get(`https://api.deezer.com/playlist/${playlistId}`)
-            .then(async ({ data }) => {
-              //SAVE PLAYLIST TRACKS
-              const tracks: string[] = [];
-              const tracklist = data.tracks.data;
-              console.log(tracklist);
-              tracklist.map(async (tr: ITrack) => {
-                const track: ITrack = {
-                  id: tr.id,
-                  readable: tr.readable,
-                  title: tr.title,
-                  title_short: tr.title_short,
-                  duration: tr.duration,
-                  track_position: tr.track_position,
-                  disk_number: tr.disk_number,
-                  rank: tr.rank,
-                  preview: tr.preview,
-                  artist_id: tr.artist!.id,
-                  album_id: tr.album!.id,
-                };
-                tracks.push(tr.id);
-                await TrackRepository.save(track);
-              });
-
-              //SAVE PLAYLIST
-              const playlist: IPlaylist = {
-                id: data.id,
-                title: data.title,
-                description: data.description,
-                duration: data.duration,
-                nb_tracks: data.nb_tracks,
-                picture: data.picture_xl,
-                fans: data.fans,
-                tracklist: tracks,
-                creator_id: data.creator.id,
+    await Promise.all(
+      selectedPlaylists.map(async (playlistId) => {
+        await axios
+          .get(`https://api.deezer.com/playlist/${playlistId}`)
+          .then(async ({ data }) => {
+            //SAVE PLAYLIST TRACKS
+            const tracks: string[] = [];
+            const tracklist = data.tracks.data;
+            console.log(tracklist);
+            tracklist.map(async (tr: ITrack) => {
+              const track: ITrack = {
+                id: tr.id,
+                readable: tr.readable,
+                title: tr.title,
+                title_short: tr.title_short,
+                duration: tr.duration,
+                track_position: tr.track_position,
+                disk_number: tr.disk_number,
+                rank: tr.rank,
+                preview: tr.preview,
+                artist_id: tr.artist!.id,
+                album_id: tr.album!.id,
               };
-              await PlaylistRepository.save(playlist);
+              tracks.push(tr.id);
+              await TrackRepository.save(track);
             });
-        })
-      ); */
+
+            //SAVE PLAYLIST
+            const playlist: IPlaylist = {
+              id: data.id,
+              title: data.title,
+              description: data.description,
+              duration: data.duration,
+              nb_tracks: data.nb_tracks,
+              picture: data.picture_xl,
+              fans: data.fans,
+              tracklist: tracks,
+              creator_id: data.creator.id,
+            };
+            await PlaylistRepository.save(playlist);
+          });
+      })
+    );
     res.redirect("http://localhost:5173/account");
     //}
   },

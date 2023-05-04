@@ -5,3 +5,4 @@ export const PlaylistRouter = Router();
 
 PlaylistRouter.get("/", PlaylistController.getAll);
 PlaylistRouter.get("/home", PlaylistController.getAllHome);
+PlaylistRouter.get("/search", PlaylistController.search);

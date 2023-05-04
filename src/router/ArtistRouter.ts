@@ -6,4 +6,5 @@ export const ArtistRouter = Router();
 
 ArtistRouter.get("/", ArtistController.getAll);
 ArtistRouter.get("/home", ArtistController.getAllHome);
+ArtistRouter.get("/search", ArtistController.search);
 ArtistRouter.get("/:id", ArtistController.getById);

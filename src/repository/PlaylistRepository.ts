@@ -9,13 +9,12 @@ export const PlaylistRepository = {
     }
   },
 
-  findAll: async () => {
-    return await PlaylistModel.find({});
-  },
+  findAll: async () => await PlaylistModel.find({}),
 
-  findAllHome: async () => {
-    return await PlaylistModel.find({}).limit(13);
-  },
+  findAllHome: async () => await PlaylistModel.find({}).limit(13),
+
+  search: async (query: string) =>
+    await PlaylistModel.find({ title: { $regex: query, $options: "i" } }),
 
   deleteAll: async () => {
     const areDeleted = await PlaylistModel.deleteMany({});

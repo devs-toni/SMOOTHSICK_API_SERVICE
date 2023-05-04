@@ -9,16 +9,14 @@ export const AlbumRepository = {
     }
   },
 
-  findById: async (id: string) => {
-    return await AlbumModel.find({ id: id });
-  },
+  findById: async (id: string) => await AlbumModel.find({ id: id }),
 
-  findAll: async () => {
-    return await AlbumModel.find({});
-  },
+  findAll: async () => await AlbumModel.find({}),
 
-  findAllHome: async () => {
-    return await AlbumModel.find({}).limit(13);
+  findAllHome: async () => await AlbumModel.find({}).limit(13),
+
+  search: async (query: string) => {
+    return await AlbumModel.find({ title: { $regex: query, $options: "i" } });
   },
 
   deleteAll: async () => {

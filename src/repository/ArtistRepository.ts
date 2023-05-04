@@ -9,17 +9,14 @@ export const ArtistRepository = {
     }
   },
 
-  findAll: async () => {
-    return await ArtistModel.find({});
-  },
+  findAll: async () => await ArtistModel.find({}),
 
-  findAllHome: async () => {
-    return await ArtistModel.find({}).limit(13);
-  },
+  findAllHome: async () => await ArtistModel.find({}).limit(13),
 
-  findById: async (id: string) => {
-    return await ArtistModel.find({ id: id });
-  },
+  findById: async (id: string) => await ArtistModel.find({ id: id }),
+
+  search: async (query: string) =>
+    await ArtistModel.find({ name: { $regex: query, $options: "i" } }),
 
   deleteAll: async () => {
     const areDeleted = await ArtistModel.deleteMany({});

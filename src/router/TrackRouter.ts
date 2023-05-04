@@ -5,3 +5,4 @@ export const TrackRouter = Router();
 
 TrackRouter.get("/", TrackController.getAll)
 TrackRouter.get("/home", TrackController.getAllHome)
+TrackRouter.get("/search", TrackController.search);

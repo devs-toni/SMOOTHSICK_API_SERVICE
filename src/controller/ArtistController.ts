@@ -17,4 +17,10 @@ export const ArtistController = {
     const homeArtists = await ArtistRepository.findAllHome();
     return res.send(homeArtists);
   },
+
+  search: async (req: Request, res: Response) => {
+    const str = req.query.search as string;
+    const results = await ArtistRepository.search(str);
+    return res.send(results);
+  },
 };

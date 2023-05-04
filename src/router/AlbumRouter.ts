@@ -5,3 +5,4 @@ export const AlbumRouter = Router();
 
 AlbumRouter.get('/', AlbumController.getAll); 
 AlbumRouter.get('/home', AlbumController.getAllHome);
+AlbumRouter.get('/search', AlbumController.search);

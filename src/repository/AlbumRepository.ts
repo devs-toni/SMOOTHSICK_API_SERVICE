@@ -9,16 +9,18 @@ export const AlbumRepository = {
     }
   },
 
-  findById: async (id: string) => {
-    return await AlbumModel.find({ id: id });
-  },
+  findById: async (id: string) => await AlbumModel.find({ id: id }),
 
-  findAll: async () => {
-    return await AlbumModel.find({});
-  },
+  findAll: async () => await AlbumModel.find({}).sort({ title: 1 }),
 
-  findAllHome: async () => {
-    return await AlbumModel.find({}).limit(13);
+  findAllHome: async () =>
+    await AlbumModel.find({}).sort({ fans: -1 }).limit(13),
+
+  findMoreHome: async () =>
+    await AlbumModel.find({}).sort({ fans: 1 }).limit(13),
+
+  search: async (query: string) => {
+    return await AlbumModel.find({ title: { $regex: query, $options: "i" } });
   },
 
   deleteAll: async () => {

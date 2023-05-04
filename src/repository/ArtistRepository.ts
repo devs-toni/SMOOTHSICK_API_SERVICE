@@ -9,7 +9,7 @@ export const ArtistRepository = {
     }
   },
 
-  findAll: async () => await ArtistModel.find({}),
+  findAll: async () => await ArtistModel.find({}).sort({ name: -1 }),
 
   findAllHome: async () =>
     await ArtistModel.find({}).sort({ nb_fan: -1 }).limit(13),

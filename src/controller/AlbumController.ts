@@ -6,7 +6,7 @@ export const AlbumController = {
   
   getAll: async (req: Request, res: Response) => {
     const allAlbums = await AlbumRepository.findAll();
-    res.send(allAlbums);
+    return res.send(allAlbums);
   },
 
   getAllHome: async (req: Request, res: Response) => {

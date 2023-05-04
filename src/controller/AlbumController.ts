@@ -14,7 +14,20 @@ export const AlbumController = {
     await Promise.all(
       homeAlbums.map(async (album) => {
         const artist = await ArtistRepository.findById(album.artist_id);
-        finalData.push({ album, artist: artist[0] });
+        artist.length > 0 && finalData.push({ album, artist: artist[0] });
+      })
+    );
+    console.log(finalData);
+    return res.send(finalData);
+  },
+
+  getMoreHome: async (req: Request, res: Response) => {
+    const homeAlbums = await AlbumRepository.findMoreHome();
+    let finalData: Object[] = [];
+    await Promise.all(
+      homeAlbums.map(async (album) => {
+        const artist = await ArtistRepository.findById(album.artist_id);
+        artist.length > 0 && finalData.push({ album, artist: artist[0] });
       })
     );
     return res.send(finalData);

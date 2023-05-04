@@ -34,6 +34,31 @@ export const TrackController = {
     return res.send(finalData);
   },
 
+  getMoreHome: async (req: Request, res: Response) => {
+    const artists = await ArtistRepository.findMoreHome();
+    let finalData: Object[] = [];
+    let finalTracks: ITrack[] = [];
+
+    await Promise.all(
+      artists.map(async (artist) => {
+        const track = await TrackRepository.findBestSong(artist.id);
+        finalTracks.push(track[0]);
+      })
+    );
+
+    await Promise.all(
+      finalTracks.map(async (track) => {
+        if (track?.album_id) {
+          const album = await AlbumRepository.findById(track.album_id);
+          if (album.length !== 0) {
+            finalData.push({ track, album: album[0] });
+          }
+        }
+      })
+    );
+    return res.send(finalData);
+  },
+
   search: async (req: Request, res: Response) => {
     const str = req.query.search as string;
     const results = await TrackRepository.search(str);

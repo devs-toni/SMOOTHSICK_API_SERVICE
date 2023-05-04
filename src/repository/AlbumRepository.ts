@@ -13,7 +13,11 @@ export const AlbumRepository = {
 
   findAll: async () => await AlbumModel.find({}),
 
-  findAllHome: async () => await AlbumModel.find({}).limit(13),
+  findAllHome: async () =>
+    await AlbumModel.find({}).sort({ fans: -1 }).limit(13),
+
+  findMoreHome: async () =>
+    await AlbumModel.find({}).sort({ fans: 1 }).limit(13),
 
   search: async (query: string) => {
     return await AlbumModel.find({ title: { $regex: query, $options: "i" } });

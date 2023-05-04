@@ -5,7 +5,7 @@ import { ArtistRepository } from "../repository/ArtistRepository";
 export const TrackController = {
   getAll: async (req: Request, res: Response) => {
     const allTracks = await TrackRepository.findAll();
-    res.send(allTracks);
+    return res.send(allTracks);
   },
   getAllHome: async (req: Request, res: Response) => {
     const homeTracks = await TrackRepository.findAllHome();
@@ -13,12 +13,11 @@ export const TrackController = {
     await Promise.all(
       homeTracks.map(async (track) => {
         const artist = await ArtistRepository.findById(track.artist_id);
-        if (artist) finalData.push({ track, artist: artist[0] });
+        if (artist.length !== 0) {
+          finalData.push({ track, artist: artist[0] });
+        }
       })
     );
-    //console.log(finalData);
-    res.send(finalData);
+    return res.send(finalData);
   },
-
-  
 };

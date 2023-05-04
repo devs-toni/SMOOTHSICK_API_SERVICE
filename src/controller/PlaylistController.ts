@@ -5,11 +5,11 @@ export const PlaylistController = {
 
   getAll: async(req: Request, res: Response) => {
     const allPlaylists = await PlaylistRepository.findAll();
-    res.send(allPlaylists);
+    return res.send(allPlaylists);
   },
 
   getAllHome: async(req: Request, res: Response) => {
     const homePlaylists = await PlaylistRepository.findAllHome();
-    res.send(homePlaylists);
+    return res.send(homePlaylists);
   }
 };

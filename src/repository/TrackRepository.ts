@@ -8,6 +8,15 @@ export const TrackRepository = {
       return await TrackModel.create(track);
     }
   },
+
+  findAll: async () => {
+    return await TrackModel.find({});
+  },
+
+  findAllHome: async () => {
+    return await TrackModel.find({}).limit(16);
+  },
+
   deleteAll: async () => {
     const areDeleted = await TrackModel.deleteMany({});
     return areDeleted.acknowledged;

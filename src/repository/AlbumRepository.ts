@@ -8,6 +8,15 @@ export const AlbumRepository = {
       return await AlbumModel.create(album);
     }
   },
+
+  findAll: async () => {
+    return await AlbumModel.find({});
+  },
+
+  findAllHome: async () => {
+    return await AlbumModel.find({}).limit(16);
+  },
+
   deleteAll: async () => {
     const areDeleted = await AlbumModel.deleteMany({});
     return areDeleted.acknowledged;

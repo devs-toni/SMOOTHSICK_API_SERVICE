@@ -11,4 +11,5 @@ export interface IUserRegister {
 export interface IUserLogin {
     email: string;
     password: string;
+    id: string
 }

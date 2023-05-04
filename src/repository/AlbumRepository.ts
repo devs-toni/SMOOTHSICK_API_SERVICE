@@ -18,7 +18,7 @@ export const AlbumRepository = {
   },
 
   findAllHome: async () => {
-    return await AlbumModel.find({}).limit(14);
+    return await AlbumModel.find({}).limit(13);
   },
 
   deleteAll: async () => {

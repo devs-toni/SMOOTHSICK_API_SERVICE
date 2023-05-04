@@ -26,9 +26,8 @@ export const UserController = {
             const saveUser = UserRepository.save(user)
 
             saveUser.then(user => {
-                if (typeof user === "undefined") return res.status(500).send('Error al registrar')
+                if (typeof user === "undefined") return res.status(500).send('Failed to register')
                 if (typeof user === 'number') return res.status(204).send('User exists');
-
                 return res.status(200).send(saveUser);
             })
 
@@ -47,12 +46,10 @@ export const UserController = {
 
         const currentUser = await UserRepository.get(user.email)
         if (typeof currentUser === "undefined") return res.status(401).send('Incorrect login data')
-
-
-        await bcrypt.compare(userData.password, currentUser?.password, (error: string, result: boolean) => {
+        const token = await tokenGenerator(currentUser.id)
+         bcrypt.compare(userData.password, currentUser?.password, (error: string, result: boolean) => {
             if (error) throw error
             if (result) {
-                const token = tokenGenerator(currentUser.id)
                 return res.status(200).send({ token, currentUser })
             }
 

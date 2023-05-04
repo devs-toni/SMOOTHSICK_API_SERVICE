@@ -12,6 +12,11 @@ export const PlaylistController = {
     return res.send(homePlaylists);
   },
 
+  getAllLess: async (req: Request, res: Response) => {
+    const homePlaylists = await PlaylistRepository.findAllLess();
+    return res.send(homePlaylists);
+  },
+
   search: async (req: Request, res: Response) => {
     const str = req.query.search as string;
     const results = await PlaylistRepository.search(str);

@@ -18,6 +18,11 @@ export const ArtistController = {
     return res.send(homeArtists);
   },
 
+  getMoreHome: async (req: Request, res: Response) => {
+    const homeArtists = await ArtistRepository.findMoreHome();
+    return res.send(homeArtists);
+  },
+
   search: async (req: Request, res: Response) => {
     const str = req.query.search as string;
     const results = await ArtistRepository.search(str);

@@ -11,7 +11,11 @@ export const PlaylistRepository = {
 
   findAll: async () => await PlaylistModel.find({}),
 
-  findAllHome: async () => await PlaylistModel.find({}).limit(13),
+  findAllHome: async () =>
+    await PlaylistModel.find({}).sort({ fans: -1 }).limit(13),
+
+  findAllLess: async () =>
+    await PlaylistModel.find({}).sort({ fans: 1 }).limit(13),
 
   search: async (query: string) =>
     await PlaylistModel.find({ title: { $regex: query, $options: "i" } }),

@@ -11,7 +11,7 @@ export const AlbumRepository = {
 
   findById: async (id: string) => await AlbumModel.find({ id: id }),
 
-  findAll: async () => await AlbumModel.find({}),
+  findAll: async () => await AlbumModel.find({}).sort({ title: 1 }),
 
   findAllHome: async () =>
     await AlbumModel.find({}).sort({ fans: -1 }).limit(13),

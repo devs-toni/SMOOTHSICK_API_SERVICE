@@ -5,7 +5,14 @@ import { ArtistRepository } from "../repository/ArtistRepository";
 export const AlbumController = {
   getAll: async (req: Request, res: Response) => {
     const allAlbums = await AlbumRepository.findAll();
-    return res.send(allAlbums);
+    let finalData: Object[] = [];
+    await Promise.all(
+      allAlbums.map(async (album) => {
+        const artist = await ArtistRepository.findById(album.artist_id);
+        artist.length > 0 && finalData.push({ album, artist: artist[0] });
+      })
+    );
+    return res.send(finalData);
   },
 
   getAllHome: async (req: Request, res: Response) => {

@@ -14,7 +14,7 @@ export const TrackRepository = {
   },
 
   findAllHome: async () => {
-    return await TrackModel.find({ artist_id: { $exists: true } }).limit(14);
+    return await TrackModel.find({ artist_id: { $exists: true } }).limit(13);
   },
 
   findBestSong: async (artistId: string) => {

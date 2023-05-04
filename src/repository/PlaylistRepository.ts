@@ -14,7 +14,7 @@ export const PlaylistRepository = {
   },
 
   findAllHome: async () => {
-    return await PlaylistModel.find({}).limit(14);
+    return await PlaylistModel.find({}).limit(13);
   },
 
   deleteAll: async () => {

@@ -13,6 +13,7 @@ export const TrackController = {
     const artists = await ArtistRepository.findAllHome();
     let finalData: Object[] = [];
     let finalTracks: ITrack[] = [];
+   
     await Promise.all(
       artists.map(async (artist) => {
         const track = await TrackRepository.findBestSong(artist.id);

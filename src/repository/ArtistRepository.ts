@@ -9,6 +9,18 @@ export const ArtistRepository = {
     }
   },
 
+  findAll: async () => {
+    return await ArtistModel.find({});
+  },
+
+  findAllHome: async () => {
+    return await ArtistModel.find({}).limit(16);
+  },
+
+  findById: async (id: string) => {
+    return await ArtistModel.find({ id: id });
+  },
+
   deleteAll: async () => {
     const areDeleted = await ArtistModel.deleteMany({});
     return areDeleted.acknowledged;

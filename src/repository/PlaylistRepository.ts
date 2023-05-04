@@ -8,6 +8,15 @@ export const PlaylistRepository = {
       return await PlaylistModel.create(playlist);
     }
   },
+
+  findAll: async () => {
+    return await PlaylistModel.find({});
+  },
+
+  findAllHome: async () => {
+    return await PlaylistModel.find({}).limit(16);
+  },
+
   deleteAll: async () => {
     const areDeleted = await PlaylistModel.deleteMany({});
     return areDeleted.acknowledged;

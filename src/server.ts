@@ -6,6 +6,7 @@ import { TrackRouter } from "./router/TrackRouter";
 import { NextFunction, Request, Response } from "express";
 import CONFIGURATION, { ENV } from "./config/config";
 import { loggerStream } from "./config/logger/winston";
+import { UserRouter } from "./router/UserRouter";
 
 const express = require("express");
 const helmet = require("helmet");
@@ -35,3 +36,4 @@ app.use("/artists", ArtistRouter);
 app.use("/albums", AlbumRouter);
 app.use("/playlists", PlaylistRouter);
 app.use("/tracks", TrackRouter);
+app.use("/users", UserRouter);

@@ -11,8 +11,8 @@ export interface ITrack {
   disk_number?: number;
   rank: number;
   preview?: string;
-  artist_id: string;
-  album_id: string;
+  artist_id?: string;
+  album_id?: string;
   artist?: IArtist;
   album?: IAlbum;
 }

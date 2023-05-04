@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { TrackRepository } from "../repository/TrackRepository";
+import { AlbumRepository } from "../repository/AlbumRepository";
 import { ArtistRepository } from "../repository/ArtistRepository";
+import { ITrack } from "../models/Track";
 
 export const TrackController = {
   getAll: async (req: Request, res: Response) => {
@@ -8,13 +10,23 @@ export const TrackController = {
     return res.send(allTracks);
   },
   getAllHome: async (req: Request, res: Response) => {
-    const homeTracks = await TrackRepository.findAllHome();
+    const artists = await ArtistRepository.findAllHome();
     let finalData: Object[] = [];
+    let finalTracks: ITrack[] = [];
     await Promise.all(
-      homeTracks.map(async (track) => {
-        const artist = await ArtistRepository.findById(track.artist_id);
-        if (artist.length !== 0) {
-          finalData.push({ track, artist: artist[0] });
+      artists.map(async (artist) => {
+        const track = await TrackRepository.findBestSong(artist.id);
+        finalTracks.push(track[0]);
+      })
+    );
+
+    await Promise.all(
+      finalTracks.map(async (track) => {
+        if (track?.album_id) {
+          const album = await AlbumRepository.findById(track.album_id);
+          if (album.length !== 0) {
+            finalData.push({ track, album: album[0] });
+          }
         }
       })
     );

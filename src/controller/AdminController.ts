@@ -13,10 +13,17 @@ const data = require("../config/data.json");
 
 export const AdminController = {
   reload: async (req: Request, res: Response) => {
-    
+    function sleep(milliseconds: number) {
+      var start = new Date().getTime();
+      for (var i = 0; i < 1e7; i++) {
+        if (new Date().getTime() - start > milliseconds) {
+          break;
+        }
+      }
+    }
     const { playlists, artists, albums } = data;
 
-    /* const artistsDeleted = await ArtistRepository.deleteAll();
+/*     const artistsDeleted = await ArtistRepository.deleteAll();
     const albumsDeleted = await AlbumRepository.deleteAll();
     const tracksDeleted = await TrackRepository.deleteAll();
     const playlistsDeleted = await PlaylistRepository.deleteAll();
@@ -50,7 +57,7 @@ export const AdminController = {
                   //SAVE ALBUM TRACKS
                   const tracklist = data.data;
                   tracklist.map(async (tr: ITrack) => {
-                    //console.log(tr);
+                    console.log(tr);
                     const track: ITrack = {
                       id: tr.id,
                       readable: tr.readable,
@@ -94,7 +101,6 @@ export const AdminController = {
               //SAVE PLAYLIST TRACKS
               const tracks: string[] = [];
               const tracklist = data.tracks.data;
-              console.log(tracklist);
               tracklist.map(async (tr: ITrack) => {
                 const track: ITrack = {
                   id: tr.id,
@@ -106,8 +112,6 @@ export const AdminController = {
                   disk_number: tr.disk_number,
                   rank: tr.rank,
                   preview: tr.preview,
-                  artist_id: tr.artist!.id,
-                  album_id: tr.album!.id,
                 };
                 tracks.push(tr.id);
                 await TrackRepository.save(track);

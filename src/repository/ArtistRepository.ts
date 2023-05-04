@@ -14,7 +14,7 @@ export const ArtistRepository = {
   },
 
   findAllHome: async () => {
-    return await ArtistModel.find({}).limit(16);
+    return await ArtistModel.find({}).limit(14);
   },
 
   findById: async (id: string) => {

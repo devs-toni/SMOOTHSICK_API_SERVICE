@@ -3,11 +3,11 @@ import { UserModel } from "./schemas/User";
 
 export const UserRepository = {
     save: async (user: IUserRegister) => {
+        
         try {
-            const UserExist = await UserModel.findOne({ email: user.email });
-            if (!UserExist) return await UserModel.create(user);
+            const userExist = await UserModel.findOne({ email: user.email });
+            if (!userExist) return await UserModel.create(user);
             return 0;
-
         } catch (error) {
             console.log(error);
             return undefined
@@ -24,5 +24,6 @@ export const UserRepository = {
             return undefined;
         }
     }
+    
 }
 

@@ -3,5 +3,5 @@ export interface FormRegister {
 }
 
 export interface FormLogin {
-    userData: { email: string, password: string }
+    userData: { email: string, password: string, id: string }
 }

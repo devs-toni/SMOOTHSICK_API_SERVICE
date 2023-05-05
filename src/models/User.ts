@@ -13,3 +13,13 @@ export interface IUserLogin {
     password: string;
     id: string
 }
+
+export interface IGetUserData {
+    id: string;
+    name: string;
+    last_name: string;
+    user_name: string;
+    email: string;
+    role: string;
+
+}

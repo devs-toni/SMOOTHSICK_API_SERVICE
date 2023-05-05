@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { FormLogin, FormRegister } from "../entity/User";
-import { IUserLogin, IUserRegister } from "../models/User";
+import { IGetUserData, IUserLogin, IUserRegister } from "../models/User";
 import { UserRepository } from "../repository/UserRepository";
 import { tokenGenerator } from "../helpers/tokenGenerator";
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 export const UserController = {
     async register(req: Request, res: Response) {
@@ -40,6 +41,7 @@ export const UserController = {
             id: userData.id
         }
         const currentUser = await UserRepository.get(user.email)
+
         if (typeof currentUser === "undefined") return res.status(401).send('Incorrect login data')
         const token = await tokenGenerator(currentUser.id)
 
@@ -51,4 +53,34 @@ export const UserController = {
 
         })
     },
+
+    async authorizate(req: Request, res: Response) {
+        const user = req.body.user
+        if(user) {
+            const currentUser = await UserRepository.getById(user.id)
+            if (currentUser?.role === "A") return res.send(true)
+            if (currentUser?.role === "U") return res.send(false)
+        }
+    },
+
+    async getUserData(req: Request, res: Response) {
+        const user = res.locals.user;
+        const {id} = user
+        if (id) {
+            const currentUser = await UserRepository.getById(id)
+            const userToSend: IGetUserData = {
+                id: currentUser?.id,
+                name: currentUser?.name,
+                last_name: currentUser?.last_name,
+                user_name: currentUser?.name,
+                email: currentUser?.email,
+                role: currentUser?.role
+            }
+            if (userToSend) return res.status(200).send(userToSend)
+            if (!userToSend) return res.status(401).send('User not found')
+            return res.status(500).send("Something went wrong")
+        }
+
+
+    }
 }

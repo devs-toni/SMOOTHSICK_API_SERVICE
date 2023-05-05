@@ -3,7 +3,7 @@ import { UserModel } from "./schemas/User";
 
 export const UserRepository = {
     save: async (user: IUserRegister) => {
-        
+
         try {
             const userExist = await UserModel.findOne({ email: user.email });
             if (!userExist) return await UserModel.create(user);
@@ -14,9 +14,20 @@ export const UserRepository = {
         }
     },
 
-    get: async (email: string) => {
+    get: async (email: String) => {
         try {
-            const userFinded = (await UserModel.findOne({ email }))
+            const userFinded = await UserModel.findOne({ email })
+            if (userFinded) return userFinded;
+            else return undefined;
+        } catch (err) {
+            console.error(err);
+            return undefined;
+        }
+    },
+
+    getById: async (id: String) => {
+        try {
+            const userFinded = await UserModel.findOne({ _id: id })
             if (userFinded) return userFinded;
             else return undefined;
         } catch (err) {
@@ -24,6 +35,6 @@ export const UserRepository = {
             return undefined;
         }
     }
-    
+
 }
 

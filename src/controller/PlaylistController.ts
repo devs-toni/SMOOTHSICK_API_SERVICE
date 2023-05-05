@@ -22,4 +22,10 @@ export const PlaylistController = {
     const results = await PlaylistRepository.search(str);
     return res.send(results);
   },
+  getById: async  (req: Request, res: Response) => {
+    const id = req.params.id
+    const getPlaylists = await PlaylistRepository.findById(id);
+    return res.send(getPlaylists);
+    
+  },
 };

@@ -14,7 +14,7 @@ export const PlaylistRepository = {
   findAllHome: async () =>
     await PlaylistModel.find({}).sort({ fans: -1 }).limit(13),
 
-  findAllLess: async () =>
+  findMoreHome: async () =>
     await PlaylistModel.find({}).sort({ fans: 1 }).limit(13),
 
   search: async (query: string) =>

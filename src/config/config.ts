@@ -11,7 +11,7 @@ class CONFIGURATION implements Iconfig {
     development: env_parameters = {
         app: {
             PORT: PORT as unknown as number || 4000,
-            FRONT_URI: "http://localhost:5173"
+            FRONT_URI: "http://127.0.0.1:5173"
         },
         db: {
             DB_URI: DB_URI as string

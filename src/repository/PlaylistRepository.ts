@@ -9,6 +9,8 @@ export const PlaylistRepository = {
     }
   },
 
+  findById: async (id: string) => await PlaylistModel.find({ id: id }),
+
   findAll: async () => await PlaylistModel.find({}),
 
   findAllHome: async () =>

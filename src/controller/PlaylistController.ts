@@ -12,8 +12,8 @@ export const PlaylistController = {
     return res.send(homePlaylists);
   },
 
-  getAllLess: async (req: Request, res: Response) => {
-    const homePlaylists = await PlaylistRepository.findAllLess();
+  getMoreHome: async (req: Request, res: Response) => {
+    const homePlaylists = await PlaylistRepository.findMoreHome();
     return res.send(homePlaylists);
   },
 
@@ -21,5 +21,11 @@ export const PlaylistController = {
     const str = req.query.search as string;
     const results = await PlaylistRepository.search(str);
     return res.send(results);
+  },
+  getById: async  (req: Request, res: Response) => {
+    const id = req.params.id
+    const getPlaylists = await PlaylistRepository.findById(id);
+    return res.send(getPlaylists);
+    
   },
 };

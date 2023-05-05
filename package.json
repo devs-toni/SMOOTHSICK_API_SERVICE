@@ -19,6 +19,7 @@
     "helmet": "^6.1.5",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.5",
+    "swagger-ui-express": "^4.6.3",
     "winston": "^3.8.2"
   },
   "devDependencies": {

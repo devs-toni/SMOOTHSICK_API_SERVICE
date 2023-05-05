@@ -3,6 +3,12 @@ import { AlbumRepository } from "../repository/AlbumRepository";
 import { ArtistRepository } from "../repository/ArtistRepository";
 
 export const AlbumController = {
+  getById: async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const album = await AlbumRepository.findById(id);
+    return res.send(album[0]);
+  },
+
   getAll: async (req: Request, res: Response) => {
     const allAlbums = await AlbumRepository.findAll();
     let finalData: Object[] = [];

@@ -7,9 +7,11 @@ export const tokenChecker = async (req: Request, res: Response, next: NextFuncti
     if (!token) return res.status(401).send('Access Denied')
     
     try {
-        const { id } = jwt.verify(token, process.env.TOKEN_SECRET)
+        const { id } = jwt.verify(token, process.env.JWT_SECRET)
         const user = await UserModel.findById(id)
         if (!user) return res.status(401).send('Invalid Token - user doesnt exist')
+        res.locals.user = user
+        
         next()
     } catch (err) {
         console.error(err);

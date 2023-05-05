@@ -46,6 +46,19 @@ export const AlbumController = {
     return res.send(finalData);
   },
 
+  getTop: async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const homeAlbums = await AlbumRepository.findTop(id);
+    let finalData: Object[] = [];
+    await Promise.all(
+      homeAlbums.map(async (album) => {
+        const artist = await ArtistRepository.findById(album.artist_id);
+        artist.length > 0 && finalData.push({ album, artist: artist[0] });
+      })
+    );
+    return res.send(finalData);
+  },
+
   search: async (req: Request, res: Response) => {
     const str = req.query.search as string;
     const results = await AlbumRepository.search(str);

@@ -59,6 +59,24 @@ export const TrackController = {
     return res.send(finalData);
   },
 
+  getTop: async (req: Request, res: Response) => {
+    const id = req.params.id;
+    let finalData: Object[] = [];
+    const tracks = await TrackRepository.findTopFour(id);
+
+    await Promise.all(
+      tracks.map(async (track) => {
+        if (track?.album_id) {
+          const album = await AlbumRepository.findById(track.album_id);
+          if (album.length !== 0) {
+            finalData.push({ track, album: album[0] });
+          }
+        }
+      })
+    );
+    return res.send(finalData);
+  },
+
   search: async (req: Request, res: Response) => {
     const str = req.query.search as string;
     const results = await TrackRepository.search(str);

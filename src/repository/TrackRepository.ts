@@ -20,6 +20,8 @@ export const TrackRepository = {
     await TrackModel.find({ artist_id: { $exists: true } })
       .sort({ rank: 1 })
       .limit(13), */
+  findTopFour: async (artistId: string) => 
+    await TrackModel.find({ artist_id: artistId }).limit(4),
 
   findBestSong: async (artistId: string) =>
     await TrackModel.find({ artist_id: artistId }).sort({ rank: -1 }).limit(1),

@@ -7,4 +7,7 @@ AlbumRouter.get('/', AlbumController.getAll);
 AlbumRouter.get('/home', AlbumController.getAllHome);
 AlbumRouter.get('/more', AlbumController.getMoreHome);
 AlbumRouter.get('/search', AlbumController.search);
+AlbumRouter.get('/top/:id', AlbumController.getTop);
 AlbumRouter.get('/:id', AlbumController.getById);
+
+

@@ -9,6 +9,11 @@ export const AlbumRepository = {
     }
   },
 
+  findTop: async (artistId: string) =>
+    await AlbumModel.find({ artist_id: artistId })
+      .sort({ fans: -1 })
+      .limit(10),
+
   findById: async (id: string) => await AlbumModel.find({ id: id }),
 
   findAll: async () => await AlbumModel.find({}).sort({ title: 1 }),

@@ -10,7 +10,7 @@ export const ArtistController = {
   getById: async (req: Request, res: Response) => {
     const id = req.params.id;
     const artist = await ArtistRepository.findById(id);
-    return res.send(artist);
+    return res.send(artist[0]);
   },
 
   getAllHome: async (req: Request, res: Response) => {

@@ -3,3 +3,4 @@ package-lock.json
 .env
 error.log
 all.log
+src/db/mongo_key.pem

@@ -7,9 +7,9 @@ const { app: env_app } = CONFIGURATION;
 
 connectDb()
   .then(() => {
-    logger.console("Database connected!");
+    console.log("Database connected!");
     app.listen(env_app.PORT, () => {
-      logger.console("Application running on port " + env_app.PORT);
+      console.log("Application running on port " + env_app.PORT);
     });
   })
-  .catch((err) => logger.error(err));
+  .catch((err) => console.log(err));

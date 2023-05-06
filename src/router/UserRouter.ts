@@ -7,5 +7,5 @@ export const UserRouter = Router();
 UserRouter
     .post("/register", UserController.register)// Get register
     .post("/authenticate", UserController.authenticate)// Get login
-    .post("/authorizate", UserController.authorizate)// Get Check user rol
+    .post("/authorizate", tokenChecker, UserController.authorizate)// Get Check user rol
     .post("/userData", tokenChecker, UserController.getUserData)// Get user trow token

@@ -5,6 +5,11 @@ import { ArtistRepository } from "../repository/ArtistRepository";
 import { ITrackDto, ITrack } from "../models/Track";
 
 export const TrackController = {
+  getById: async (req: Request, res: Response) => {
+    const id = req.params.id
+    const track = await TrackRepository.findById(id);
+    return res.send(track);
+  },
   getAll: async (req: Request, res: Response) => {
     const allTracks = await TrackRepository.findAll();
     return res.send(allTracks);

@@ -39,7 +39,7 @@ export const PlaylistController = {
   },
   getById: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const getPlaylists = await PlaylistRepository.findById(id);
-    return res.send(getPlaylists);
+    const playlist = await PlaylistRepository.findById(id);
+    return res.send(playlist[0]);
   },
 };

@@ -5,7 +5,11 @@ import { UserRepository } from "../repository/UserRepository";
 import { tokenGenerator } from "../helpers/tokenGenerator";
 const bcrypt = require("bcrypt");
 
-export const UserController = {
+export const UserController = { 
+  async getAll(req: Request, res: Response) {
+    const users = await UserRepository.getAll();
+    res.send(users);
+  },
   async register(req: Request, res: Response) {
     const params: FormRegister = req.body;
     const { form } = params;
@@ -85,17 +89,20 @@ export const UserController = {
     }
   },
 
-
   async validatePass(req: Request, res: Response) {
     const { id, currentPass } = req.body;
     const findUserData = await UserRepository.getById(id);
     if (findUserData) {
-      bcrypt.compare(currentPass, findUserData.password, (error: string, result: boolean) => {
-        if (error) throw error;
-        if (result) return res.status(201).send("Correct password");
-        if (!result) return res.status(401).send("Incorrect password");
-        return res.status(500).send("Something went wrong");
-      })
+      bcrypt.compare(
+        currentPass,
+        findUserData.password,
+        (error: string, result: boolean) => {
+          if (error) throw error;
+          if (result) return res.status(201).send("Correct password");
+          if (!result) return res.status(401).send("Incorrect password");
+          return res.status(500).send("Something went wrong");
+        }
+      );
     }
   },
 
@@ -138,10 +145,7 @@ export const UserController = {
       return res.status(204).send("User does not exist")
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal Server Error")
+      res.status(500).send("Internal Server Error");
     }
-
-  }
-
-}
-
+  },
+};

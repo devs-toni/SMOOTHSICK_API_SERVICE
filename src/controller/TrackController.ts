@@ -77,6 +77,11 @@ export const TrackController = {
     return res.send(finalData);
   },
 
+  addLike: async (req: Request, res: Response) => {
+    const id = req.params.id;
+    console.log(id)
+  },
+
   search: async (req: Request, res: Response) => {
     const str = req.query.search as string;
     const results = await TrackRepository.search(str);

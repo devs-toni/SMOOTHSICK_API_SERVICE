@@ -1,6 +1,7 @@
 import { ITrack } from "../models/Track";
 import { TrackModel } from "./schemas/Track";
 
+
 export const TrackRepository = {
   save: async (track: ITrack) => {
     const trackExist = await TrackModel.findOne({ id: track.id });
@@ -8,6 +9,8 @@ export const TrackRepository = {
       return await TrackModel.create(track);
     }
   },
+
+  findById: async (trackId: string) => await TrackModel.findOne({id: trackId}),
 
   findAll: async () => await TrackModel.find({}),
 

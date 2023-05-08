@@ -4,7 +4,6 @@ import { IGetUserData, IUserLogin, IUserRegister } from "../models/User";
 import { UserRepository } from "../repository/UserRepository";
 import { tokenGenerator } from "../helpers/tokenGenerator";
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 export const UserController = {
   async register(req: Request, res: Response) {
@@ -76,7 +75,7 @@ export const UserController = {
         id: currentUser?.id,
         name: currentUser?.name,
         last_name: currentUser?.last_name,
-        user_name: currentUser?.name,
+        user_name: currentUser?.user_name,
         email: currentUser?.email,
         role: currentUser?.role,
       };
@@ -107,6 +106,36 @@ export const UserController = {
       const newPass = await bcrypt.hash(pass, 10)
       const updatePass = await UserRepository.FindByIdAndUpdate(userId, newPass)
       if (updatePass) return res.status(201).send("Password updated successfully")
+      return res.status(204).send("Username does not exist")
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error")
+    }
+
+  },
+
+
+  async changeUserName(req: Request, res: Response) {
+    const { id, type } = req.body;;
+    const userId = id;
+    try {
+      const updateUserName = await UserRepository.FindByIdAndUpdateUserName(userId, type)
+      if (updateUserName) return res.status(201).send("User name updated successfully")
+      return res.status(204).send("User does not exist")
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error")
+    }
+  },
+
+  async changeUserEmail(req: Request, res: Response) {
+    const { id, type } = req.body;
+    const userId = id;
+    try {
+      const updateUserName = await UserRepository.FindByIdAndUpdateEmail(userId, type)
+      if (updateUserName) return res.status(201).send("User email updated successfully")
+      return res.status(204).send("User does not exist")
     } catch (error) {
       console.error(error);
       res.status(500).send("Internal Server Error")

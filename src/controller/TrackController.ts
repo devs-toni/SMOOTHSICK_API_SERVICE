@@ -78,8 +78,18 @@ export const TrackController = {
   },
 
   addLike: async (req: Request, res: Response) => {
-    const id = req.params.id;
-    console.log(id)
+    const trackId = req.params.id;
+    const userId = res.locals.user.id;
+    const isLike = await TrackRepository.findLikeById(trackId, userId);
+    let result;
+    console.log(isLike);
+    if (isLike.length > 0) {
+      result = await TrackRepository.toggleLike(trackId, userId, "-");
+    } else {
+      result = await TrackRepository.toggleLike(trackId, userId, "+");
+    }
+    if (result?.acknowledged) res.send();
+    else res.status(500).send();
   },
 
   search: async (req: Request, res: Response) => {

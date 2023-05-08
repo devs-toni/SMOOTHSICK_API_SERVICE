@@ -7,6 +7,7 @@ import { ResetPassword } from "../controller/ResetPassController";
 export const UserRouter = Router();
 
 UserRouter
+    .get("/", UserController.getAll)
     .post("/register", UserController.register)// Get register
     .post("/authenticate", UserController.authenticate)// Get login
     .post("/authorizate", tokenChecker, UserController.authorizate)// Get Check user rol

@@ -14,6 +14,7 @@ const TrackSchema: Schema = new Schema(
     preview: { type: String, required: false },
     artist_id: { type: String, required: false },
     album_id: { type: String, required: false },
+    likes: { type: Array, required: false, default: [] },
   },
   {
     timestamps: true,

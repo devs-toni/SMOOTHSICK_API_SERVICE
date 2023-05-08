@@ -37,25 +37,35 @@ export const UserRepository = {
     },
 
     FindByIdAndUpdate: async (userId: String, pass: String) => {
-
         try {
-            const updatedPass = await UserModel.findByIdAndUpdate({ _id: userId },
-                {
-                    $set:
-                    {
-                        password: pass
-                    }
-                }
-            )
+            const updatedPass = await UserModel.findByIdAndUpdate({ _id: userId }, { $set: { password: pass } })
             if (updatedPass) return updatedPass;
-
-            else return undefined;
+            return undefined;
         }
         catch (error) {
             console.error(error);
+        }
+    },
+
+    FindByIdAndUpdateUserName: async (userId: String, userName: String) => {
+        try {
+            const updateUserName = await UserModel.findByIdAndUpdate({ _id: userId }, { $set: { user_name: userName } })
+            if (updateUserName) return updateUserName;
+            return undefined;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    },
+
+    FindByIdAndUpdateEmail: async (userId: String, email: String) => {
+        try {
+            const updateUserEmail = await UserModel.findByIdAndUpdate({ _id: userId }, { $set: { email } })
+            if (updateUserEmail) return updateUserEmail;
+            return undefined;
+        } catch (error) {
+            console.error(error);
 
         }
-
-
     }
 }

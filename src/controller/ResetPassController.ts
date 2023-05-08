@@ -9,9 +9,7 @@ const bcrypt = require('bcrypt');
 export const ResetPassword = {
     async reset(req: Request, res: Response) {
         const { pass, userId } = req.body;
-
         // if (!regExPassword.test(pass)) return res.send({ validation: false });
-
         try {
             const newPass = await bcrypt.hash(pass, 10);
             await UserRepository.FindByIdAndUpdate(userId, newPass)

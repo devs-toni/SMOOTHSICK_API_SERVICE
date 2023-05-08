@@ -37,7 +37,6 @@ export const UserRepository = {
     },
 
     FindByIdAndUpdate: async (userId: String, pass: String) => {
-        console.log(userId, pass);
 
         try {
             const updatedPass = await UserModel.findByIdAndUpdate({ _id: userId },
@@ -48,7 +47,7 @@ export const UserRepository = {
                     }
                 }
             )
-            if (updatedPass) return console.log("actulizada");
+            if (updatedPass) return updatedPass;
 
             else return undefined;
         }

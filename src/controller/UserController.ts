@@ -85,4 +85,34 @@ export const UserController = {
       return res.status(500).send("Something went wrong");
     }
   },
-};
+
+
+  async validatePass(req: Request, res: Response) {
+    const { id, currentPass } = req.body;
+    const findUserData = await UserRepository.getById(id);
+    if (findUserData) {
+      bcrypt.compare(currentPass, findUserData.password, (error: string, result: boolean) => {
+        if (error) throw error;
+        if (result) return res.status(201).send("Correct password");
+        if (!result) return res.status(401).send("Incorrect password");
+        return res.status(500).send("Something went wrong");
+      })
+    }
+  },
+
+  async changePass(req: Request, res: Response) {
+    const { id, pass } = req.body;
+    const userId = id;
+    try {
+      const newPass = await bcrypt.hash(pass, 10)
+      const updatePass = await UserRepository.FindByIdAndUpdate(userId, newPass)
+      if (updatePass) return res.status(201).send("Password updated successfully")
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error")
+    }
+
+  }
+
+}
+

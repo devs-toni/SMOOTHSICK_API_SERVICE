@@ -34,7 +34,29 @@ export const UserRepository = {
             console.error(err);
             return undefined;
         }
+    },
+
+    FindByIdAndUpdate: async (userId: String, pass: String) => {
+        console.log(userId, pass);
+
+        try {
+            const updatedPass = await UserModel.findByIdAndUpdate({ _id: userId },
+                {
+                    $set:
+                    {
+                        password: pass
+                    }
+                }
+            )
+            if (updatedPass) return console.log("actulizada");
+
+            else return undefined;
+        }
+        catch (error) {
+            console.error(error);
+
+        }
+
+
     }
-
 }
-

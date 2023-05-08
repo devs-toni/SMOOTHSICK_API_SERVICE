@@ -19,6 +19,23 @@ export const PlaylistRepository = {
   findMoreHome: async () =>
     await PlaylistModel.find({}).sort({ fans: 1 }).limit(13),
 
+  findLikeById: async (playlistId: string, userId: string) =>
+    await PlaylistModel.find({ id: playlistId, likes: userId }),
+
+  toggleLike: async (playlistId: string, userId: string, operation: string) => {
+    if (operation === "+") {
+      return await PlaylistModel.updateOne(
+        { id: playlistId },
+        { $push: { likes: userId } }
+      );
+    } else if (operation === "-") {
+      return await PlaylistModel.updateOne(
+        { id: playlistId },
+        { $pull: { likes: userId } }
+      );
+    }
+  },
+
   search: async (query: string) =>
     await PlaylistModel.find({ title: { $regex: query, $options: "i" } }),
 

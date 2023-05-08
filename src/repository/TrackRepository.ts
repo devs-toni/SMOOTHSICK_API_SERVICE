@@ -17,11 +17,11 @@ export const TrackRepository = {
   findBestSong: async (artistId: string) =>
     await TrackModel.find({ artist_id: artistId }).sort({ rank: -1 }).limit(1),
 
-  findLikeById: async (artistId: string, userId: string) => {
-    console.log(artistId)
-    console.log(userId)
-    return await TrackModel.find({ id: artistId, likes: userId });
-  },
+  findLikeById: async (playlistId: string, userId: string) =>
+    await TrackModel.find({ id: playlistId, likes: userId }),
+
+  findFavouritesByUserId: async (userId: string) =>
+    await TrackModel.find({ likes: userId }),
 
   toggleLike: async (trackId: string, userId: string, operation: string) => {
     if (operation === "+") {

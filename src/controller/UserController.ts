@@ -2,13 +2,60 @@ import { Request, Response } from "express";
 import { FormLogin, FormRegister } from "../entity/User";
 import { IGetUserData, IUserLogin, IUserRegister } from "../models/User";
 import { UserRepository } from "../repository/UserRepository";
+import { TrackRepository } from "../repository/TrackRepository";
+import { AlbumRepository } from "../repository/AlbumRepository";
 import { tokenGenerator } from "../helpers/tokenGenerator";
+import { ArtistRepository } from "../repository/ArtistRepository";
+import { Document } from "mongoose";
+import { IAlbum } from "../models/Album";
+import { ITrackDto } from "../models/Track";
 const bcrypt = require("bcrypt");
 
-export const UserController = { 
+export const UserController = {
   async getAll(req: Request, res: Response) {
     const users = await UserRepository.getAll();
     res.send(users);
+  },
+
+  async getFavourites(req: Request, res: Response) {
+    const userId = res.locals.user.id;
+    const tracks = await TrackRepository.findFavouritesByUserId(userId);
+    const finalData: ITrackDto[] = [];
+
+    await Promise.all(
+      tracks.map(
+        async ({
+          id,
+          title,
+          duration,
+          rank,
+          preview,
+          album_id,
+          artist_id,
+          likes,
+        }) => {
+          if (album_id) {
+            const album = await AlbumRepository.findById(album_id);
+            const artist = await ArtistRepository.findById(artist_id!);
+            if (album.length !== 0) {
+              finalData.push({
+                id,
+                title,
+                duration,
+                rank,
+                preview,
+                artist_id,
+                album_id,
+                album_cover: album[0].cover,
+                artist_name: artist[0].name,
+                likes: likes ? likes : [],
+              });
+            }
+          }
+        }
+      )
+    );
+    res.send(finalData);
   },
   async register(req: Request, res: Response) {
     const params: FormRegister = req.body;

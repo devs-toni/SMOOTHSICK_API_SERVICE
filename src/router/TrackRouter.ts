@@ -8,5 +8,5 @@ TrackRouter.get("/", TrackController.getAll);
 TrackRouter.get("/home", TrackController.getAllHome);
 TrackRouter.get("/more", TrackController.getMoreHome);
 TrackRouter.get("/search", TrackController.search);
-TrackRouter.patch("/like/:id", tokenChecker, TrackController.addLike)
+TrackRouter.patch("/like/:id", tokenChecker, TrackController.toggleLike)
 TrackRouter.get("/top/:id", TrackController.getTop);

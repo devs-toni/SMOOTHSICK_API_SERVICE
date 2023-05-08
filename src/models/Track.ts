@@ -15,4 +15,17 @@ export interface ITrack {
   album_id?: string;
   artist?: IArtist;
   album?: IAlbum;
+  likes?: []
+}
+export interface ITrackDto {
+  id: string;
+  title: string;
+  duration: number;
+  rank: number;
+  preview?: string;
+  artist_id?: string;
+  album_id?: string;
+  album_cover: string;
+  artist_name: string;
+  likes: [],
 }

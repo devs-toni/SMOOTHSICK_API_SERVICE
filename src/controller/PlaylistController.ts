@@ -17,15 +17,29 @@ export const PlaylistController = {
     return res.send(homePlaylists);
   },
 
+  toggleLike: async (req: Request, res: Response) => {
+    const playlistId = req.params.id;
+    const userId = res.locals.user.id;
+    const isLike = await PlaylistRepository.findLikeById(playlistId, userId);
+    let result;
+
+    if (isLike.length > 0) {
+      result = await PlaylistRepository.toggleLike(playlistId, userId, "-");
+    } else {
+      result = await PlaylistRepository.toggleLike(playlistId, userId, "+");
+    }
+    if (result?.acknowledged) res.send();
+    else res.status(500).send();
+  },
+
   search: async (req: Request, res: Response) => {
     const str = req.query.search as string;
     const results = await PlaylistRepository.search(str);
     return res.send(results);
   },
-  getById: async  (req: Request, res: Response) => {
-    const id = req.params.id
+  getById: async (req: Request, res: Response) => {
+    const id = req.params.id;
     const getPlaylists = await PlaylistRepository.findById(id);
     return res.send(getPlaylists);
-    
   },
 };

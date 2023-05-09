@@ -15,9 +15,10 @@ UserRouter
     .post("/userData", tokenChecker, UserController.getUserData)// Get user trow token
     .post("/forgotPassword", ForgotPassword.getUserData)// Get user trow email
     .patch("/resetPassword", ResetPassword.reset)// Update new password of user
-    .post("/validatePassword", UserController.validatePass)// Validate password of user"
-    .patch("/changePassword", UserController.changePass)// Change password of user"
+    .post("/validatePassword", UserController.validatePass)// Validate password of user
+    .patch("/changePassword", UserController.changePass)// Change password of user
     .patch("/changeUserName", UserController.changeUserName)// Change user name
     .patch("/changeUserEmail", UserController.changeUserEmail)// Change user email
+    .delete("/deleteUser/:id", UserController.deleteUser)// Delete user account
 
     

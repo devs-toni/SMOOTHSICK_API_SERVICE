@@ -39,9 +39,9 @@ export const UserRepository = {
         return await UserModel.find({}, { email: 1, name: 1, last_name: 1 });
     },
 
-    FindByIdAndUpdate: async (userId: String, pass: String) => {
+    FindByIdAndUpdate: async (id: String, pass: String) => {
         try {
-            const updatedPass = await UserModel.findByIdAndUpdate({ _id: userId }, { $set: { password: pass } })
+            const updatedPass = await UserModel.findByIdAndUpdate({ _id: id }, { $set: { password: pass } })
             if (updatedPass) return updatedPass;
             return undefined;
         }
@@ -50,9 +50,9 @@ export const UserRepository = {
         }
     },
 
-    FindByIdAndUpdateUserName: async (userId: String, userName: String) => {
+    FindByIdAndUpdateUserName: async (id: String, userName: String) => {
         try {
-            const updateUserName = await UserModel.findByIdAndUpdate({ _id: userId }, { $set: { user_name: userName } })
+            const updateUserName = await UserModel.findByIdAndUpdate({ _id: id }, { $set: { user_name: userName } })
             if (updateUserName) return updateUserName;
             return undefined;
         }
@@ -61,15 +61,26 @@ export const UserRepository = {
         }
     },
 
-    FindByIdAndUpdateEmail: async (userId: String, email: String) => {
+    FindByIdAndUpdateEmail: async (id: String, email: String) => {
         try {
-            const updateUserEmail = await UserModel.findByIdAndUpdate({ _id: userId }, { $set: { email } })
+            const updateUserEmail = await UserModel.findByIdAndUpdate({ _id: id }, { $set: { email } })
             if (updateUserEmail) return updateUserEmail;
             return undefined;
         } catch (error) {
             console.error(error);
 
         }
+    },
+
+    FindByIdAndDelete: async (id: String) => {
+        try {
+            const deletedUser = await UserModel.findByIdAndDelete({ _id: id })
+            if (deletedUser) return deletedUser;
+            return undefined;
+        } catch (error) {
+            console.error(error);
+        }
+
     }
 
 }

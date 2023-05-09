@@ -146,7 +146,7 @@ export const UserController = {
         (error: string, result: boolean) => {
           if (error) throw error;
           if (result) return res.status(201).send("Correct password");
-          if (!result) return res.status(401).send("Incorrect password");
+          if (!result) return res.status(204).send("Incorrect password");
           return res.status(500).send("Something went wrong");
         }
       );
@@ -155,10 +155,9 @@ export const UserController = {
 
   async changePass(req: Request, res: Response) {
     const { id, pass } = req.body;
-    const userId = id;
     try {
       const newPass = await bcrypt.hash(pass, 10)
-      const updatePass = await UserRepository.FindByIdAndUpdate(userId, newPass)
+      const updatePass = await UserRepository.FindByIdAndUpdate(id, newPass)
       if (updatePass) return res.status(201).send("Password updated successfully")
       return res.status(204).send("Username does not exist")
 
@@ -166,15 +165,14 @@ export const UserController = {
       console.error(error);
       res.status(500).send("Internal Server Error")
     }
-
   },
 
 
   async changeUserName(req: Request, res: Response) {
-    const { id, type } = req.body;;
-    const userId = id;
+    const { id, userName } = req.body;
+    console.log(userName);
     try {
-      const updateUserName = await UserRepository.FindByIdAndUpdateUserName(userId, type)
+      const updateUserName = await UserRepository.FindByIdAndUpdateUserName(id, userName)
       if (updateUserName) return res.status(201).send("User name updated successfully")
       return res.status(204).send("User does not exist")
     } catch (error) {
@@ -184,15 +182,31 @@ export const UserController = {
   },
 
   async changeUserEmail(req: Request, res: Response) {
-    const { id, type } = req.body;
-    const userId = id;
+    const { id, userEmail } = req.body;
     try {
-      const updateUserName = await UserRepository.FindByIdAndUpdateEmail(userId, type)
-      if (updateUserName) return res.status(201).send("User email updated successfully")
-      return res.status(204).send("User does not exist")
+      const currentUser = await UserRepository.get(userEmail);
+
+      if (currentUser) return res.status(204).send("Email already exists");
+      if (!currentUser) {
+        const updateUserEmail = await UserRepository.FindByIdAndUpdateEmail(id, userEmail)
+        if (updateUserEmail) return res.status(201).send("User email updated successfully")
+      }
     } catch (error) {
       console.error(error);
       res.status(500).send("Internal Server Error");
     }
   },
+
+
+  async deleteUser(req: Request, res: Response) {
+    const { id } = req.params;
+    try {
+      const userDeleted = await UserRepository.FindByIdAndDelete(id);
+      if (userDeleted) return res.status(201).send("User deleted successfully")
+      return res.status(204).send("User does not exist")
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 };

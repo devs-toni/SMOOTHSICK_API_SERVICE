@@ -30,7 +30,6 @@ app.use((request: Request, response: Response, next: NextFunction) => {
   );
   next();
 });
-app.use()
 
 app.use("/admin", AdminRouter);
 app.use("/artists", ArtistRouter);

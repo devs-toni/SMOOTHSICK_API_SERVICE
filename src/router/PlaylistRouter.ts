@@ -5,6 +5,7 @@ import { tokenChecker } from "../middlewares/tokenChecker";
 export const PlaylistRouter = Router();
 
 PlaylistRouter.get("/", PlaylistController.getAll);
+PlaylistRouter.post("/create", PlaylistController.createPlaylist)
 PlaylistRouter.get("/home", PlaylistController.getAllHome);
 PlaylistRouter.get("/more", PlaylistController.getMoreHome);
 PlaylistRouter.get("/search", PlaylistController.search);

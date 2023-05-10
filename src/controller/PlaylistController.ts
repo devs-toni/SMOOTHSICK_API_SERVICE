@@ -2,6 +2,25 @@ import { Request, Response } from "express";
 import { PlaylistRepository } from "../repository/PlaylistRepository";
 
 export const PlaylistController = {
+  createPlaylist: async  (req: Request, res: Response)=> {
+    const { body } = req
+    try {
+        const newPlaylist = await PlaylistRepository.save({
+            ...body
+        });
+
+        res.status(201).send({
+            status: true,
+            msg: "You have a new playlist",
+            data: newPlaylist,
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: false,
+            msg: error,
+        })
+    }
+},
   getAll: async (req: Request, res: Response) => {
     const allPlaylists = await PlaylistRepository.findAll();
     return res.send(allPlaylists);

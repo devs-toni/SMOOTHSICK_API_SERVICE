@@ -8,7 +8,7 @@ export const PlaylistRepository = {
       return await PlaylistModel.create(playlist);
     }
   },
-
+ 
   findById: async (id: string) => await PlaylistModel.find({ id: id }),
 
   findAll: async () => await PlaylistModel.find({}),

@@ -4,3 +4,4 @@ package-lock.json
 error.log
 all.log
 src/db/mongo_key.pem
+uploads/*

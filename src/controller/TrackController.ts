@@ -3,10 +3,45 @@ import { TrackRepository } from "../repository/TrackRepository";
 import { AlbumRepository } from "../repository/AlbumRepository";
 import { ArtistRepository } from "../repository/ArtistRepository";
 import { ITrackDto, ITrack } from "../models/Track";
+import {
+  cloudinary,
+  uploadAudioFile,
+  uploadImage,
+} from "../cloudinary/cloudinary";
+
+interface MulterRequest extends Request {
+  body: {
+    data: any;
+  };
+  files: {
+    audio: {
+      name: string;
+      tempFilePath: string;
+    };
+  };
+}
 
 export const TrackController = {
+  save: async (req: MulterRequest, res: any) => {
+    const data = req.body.data as unknown as ITrack;
+    const result = await TrackRepository.save(data);
+    return res.send(result)
+  },
+
+  upload: async (req: MulterRequest, res: any) => {
+    console.log(req.files.audio.name)
+    if (req.files?.audio.name) {
+      const imageUploaded = await uploadAudioFile(
+        req.files.audio.name,
+        req.files.audio.tempFilePath
+      );
+      return res.send(imageUploaded);
+    }
+    return res.status(500).send();
+  },
+
   getById: async (req: Request, res: Response) => {
-    const id = req.params.id
+    const id = req.params.id;
     const track = await TrackRepository.findById(id);
     return res.send(track);
   },
@@ -70,7 +105,7 @@ export const TrackController = {
     await Promise.all(
       artists.map(async (artist) => {
         const track = await TrackRepository.findBestSong(artist.id);
-        if (typeof (track[0]) !== 'undefined') finalTracks.push(track[0]);
+        if (typeof track[0] !== "undefined") finalTracks.push(track[0]);
       })
     );
 
@@ -148,6 +183,12 @@ export const TrackController = {
       )
     );
     return res.send(finalData);
+  },
+
+  getMySongs: async (req: Request, res: Response) => {
+    const userId = res.locals.user.id;
+    const mySongs = await TrackRepository.findMySongs(userId);
+    res.send(mySongs);
   },
 
   toggleLike: async (req: Request, res: Response) => {

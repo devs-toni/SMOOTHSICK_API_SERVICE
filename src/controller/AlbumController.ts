@@ -76,8 +76,9 @@ export const AlbumController = {
 
   getAlbumSongs: async(req: Request, res: Response) =>{
     const id = req.params.id;
+    console.log("hola" + id)
     const tracks = await TrackRepository.findAlbumSongs(id);
-    
+    console.log("miscanciones"+tracks)
     return res.send(tracks);
   }
   

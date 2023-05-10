@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { PlaylistRepository } from "../repository/PlaylistRepository";
 
 export const PlaylistController = {
-  createPlaylist : async  (req: Request, res: Response)=> {
+  createPlaylist: async  (req: Request, res: Response)=> {
     const { body } = req
     try {
         const newPlaylist = await PlaylistRepository.save({

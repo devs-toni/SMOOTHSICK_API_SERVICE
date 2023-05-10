@@ -35,8 +35,11 @@ export const TrackRepository = {
   findFavouritesByUserId: async (userId: string) =>
     await TrackModel.find({ likes: userId, disk_number: { $ne: -1 } }),
 
-  findMySongs: async (userId: string) => 
+  findMySongs: async (userId: string) =>
     await TrackModel.find({ disk_number: -1, artist_id: userId }),
+
+  findAlbumSongs: async (albumId: string) =>
+    await TrackModel.find({ album_id: albumId }),
 
   toggleLike: async (trackId: string, userId: string, operation: string) => {
     if (operation === "+") {

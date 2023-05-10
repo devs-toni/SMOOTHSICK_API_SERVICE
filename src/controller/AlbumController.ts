@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import { AlbumRepository } from "../repository/AlbumRepository";
 import { ArtistRepository } from "../repository/ArtistRepository";
+import { TrackRepository } from "../repository/TrackRepository";
 
 export const AlbumController = {
   getById: async (req: Request, res: Response) => {
     const id = req.params.id;
     const album = await AlbumRepository.findById(id);
+    console.log(album);
     return res.send(album[0]);
   },
 
@@ -71,4 +73,13 @@ export const AlbumController = {
     );
     return res.send(finalData);
   },
+
+  getAlbumSongs: async(req: Request, res: Response) =>{
+    const id = req.params.id;
+    const tracks = await TrackRepository.findAlbumSongs(id);
+    
+    return res.send(tracks);
+  }
+  
+
 };

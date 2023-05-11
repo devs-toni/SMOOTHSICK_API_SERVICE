@@ -2,12 +2,13 @@ import { Request, Response } from "express";
 import { AlbumRepository } from "../repository/AlbumRepository";
 import { ArtistRepository } from "../repository/ArtistRepository";
 import { TrackRepository } from "../repository/TrackRepository";
+import { ITrackDto } from "../models/Track";
 
 export const AlbumController = {
   getById: async (req: Request, res: Response) => {
     const id = req.params.id;
     const album = await AlbumRepository.findById(id);
-    console.log(album);
+
     return res.send(album[0]);
   },
 
@@ -74,13 +75,36 @@ export const AlbumController = {
     return res.send(finalData);
   },
 
-  getAlbumSongs: async(req: Request, res: Response) =>{
+  getAlbumSongs: async (req: Request, res: Response) => {
     const id = req.params.id;
-    console.log("hola" + id)
     const tracks = await TrackRepository.findAlbumSongs(id);
-    console.log("miscanciones"+tracks)
-    return res.send(tracks);
+    const newArr: Object[] = []
+    
+   await Promise.all(tracks.map(async (track) => {
+      const artist = await ArtistRepository.findById(track.artist_id!)
+      const trackDto = {
+        _id: track._id,
+        id: track.id,
+        readable: track.readable,
+        title: track.title,
+        title_short: track.title_short,
+        duration: track.duration,
+        track_position: track.track_position,
+        disk_number: 1,
+        rank: track.rank,
+        preview: track.preview,
+        artist_id: track.artist_id,
+        album_id: track.album_id,
+        artist_name: artist[0].name,
+      }
+      newArr.push(trackDto)
+      
+    }))
+    
+    return res.send(newArr);
+
+
   }
-  
+
 
 };

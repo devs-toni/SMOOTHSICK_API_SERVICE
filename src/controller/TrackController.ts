@@ -25,11 +25,11 @@ export const TrackController = {
   save: async (req: MulterRequest, res: any) => {
     const data = req.body.data as unknown as ITrack;
     const result = await TrackRepository.save(data);
-    return res.send(result)
+    return res.send(result);
   },
 
   upload: async (req: MulterRequest, res: any) => {
-    console.log(req.files.audio.name)
+    console.log(req.files.audio.name);
     if (req.files?.audio.name) {
       const imageUploaded = await uploadAudioFile(
         req.files.audio.name,
@@ -204,6 +204,12 @@ export const TrackController = {
     }
     if (result?.acknowledged) res.send();
     else res.status(500).send();
+  },
+
+  deleteSong: async (req: Request, res: Response) => {
+    const trackId = req.params.id;
+    const result = await TrackRepository.deleteById(trackId);
+    return res.status(result.acknowledged ? 200 : 500).send(result);
   },
 
   search: async (req: Request, res: Response) => {

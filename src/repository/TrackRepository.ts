@@ -55,6 +55,9 @@ export const TrackRepository = {
     }
   },
 
+  deleteById: async (trackId: string) =>
+    await TrackModel.deleteOne({ id: trackId }),
+
   search: async (query: string) =>
     await TrackModel.find({
       title: { $regex: query, $options: "i" },

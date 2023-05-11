@@ -13,4 +13,5 @@ TrackRouter.get("/search", TrackController.search);
 TrackRouter.patch("/like/:id", tokenChecker, TrackController.toggleLike);
 TrackRouter.get("/top/:id", TrackController.getTop);
 TrackRouter.get("/my", tokenChecker, TrackController.getMySongs);
+TrackRouter.delete("/:id", tokenChecker, TrackController.deleteSong);
 TrackRouter.get("/:id", TrackController.getById);

@@ -8,8 +8,28 @@ export const AlbumController = {
   getById: async (req: Request, res: Response) => {
     const id = req.params.id;
     const album = await AlbumRepository.findById(id);
+    const artist = await ArtistRepository.findById(album[0].artist_id);
+    let newObj: {} = {}
+    await Promise.all(album.map(async (prop) => {
+      const albumDto = {
+        _id: prop._id,
+        title: prop.title,
+        label: prop.label,
+        upc: prop.upc,
+        cover: prop.cover,
+        nb_tracks: prop.nb_tracks,
+        duration: prop.duration,
+        fans: prop.fans,
+        release_date: prop.release_date,
+        artist_id: prop.artist_id,
+        artist_picture: artist[0].picture,
+        artist_name: artist[0].name,
+      }
+     newObj = albumDto
+      
+    }))
 
-    return res.send(album[0]);
+    return res.send(newObj);
   },
 
   getAll: async (req: Request, res: Response) => {
@@ -79,9 +99,9 @@ export const AlbumController = {
     const id = req.params.id;
     const tracks = await TrackRepository.findAlbumSongs(id);
     const newArr: Object[] = []
-    
-   await Promise.all(tracks.map(async (track) => {
+    await Promise.all(tracks.map(async (track) => {
       const artist = await ArtistRepository.findById(track.artist_id!)
+      const album = await AlbumRepository.findById(track.album_id!)
       const trackDto = {
         _id: track._id,
         id: track.id,
@@ -95,12 +115,14 @@ export const AlbumController = {
         preview: track.preview,
         artist_id: track.artist_id,
         album_id: track.album_id,
-        artist_name: artist[0].name,
+        artist_name: artist[0]?.name,
+        label: album[0].label
       }
       newArr.push(trackDto)
-      
+
     }))
-    
+
+
     return res.send(newArr);
 
 

@@ -53,7 +53,6 @@ export const AlbumController = {
         artist.length > 0 && finalData.push({ album, artist: artist[0] });
       })
     );
-    // console.log(finalData);
     return res.send(finalData);
   },
 

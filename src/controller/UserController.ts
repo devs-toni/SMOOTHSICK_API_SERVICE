@@ -12,7 +12,7 @@ import { ITrackDto } from "../models/Track";
 const bcrypt = require("bcrypt");
 
 export const UserController = {
-  async getAll(req: Request, res: Response) {
+  async getAll(req: Request, res: Response) { 
     const users = await UserRepository.getAll();
     res.send(users);
   },
@@ -37,6 +37,7 @@ export const UserController = {
           if (album_id) {
             const album = await AlbumRepository.findById(album_id);
             const artist = await ArtistRepository.findById(artist_id!);
+            
             if (album.length !== 0) {
               finalData.push({
                 id,
@@ -47,7 +48,7 @@ export const UserController = {
                 artist_id,
                 album_id,
                 album_cover: album[0].cover,
-                artist_name: artist[0].name,
+                artist_name: artist[0]?.name,
                 likes: likes ? likes : [],
               });
             }

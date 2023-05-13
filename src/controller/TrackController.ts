@@ -34,8 +34,12 @@ export const TrackController = {
       const imageUploaded = await uploadAudioFile(
         req.files.audio.name,
         req.files.audio.tempFilePath
-      );
-      return res.send(imageUploaded);
+      ).then((res) => {
+        return res;
+      }).catch((err) => {
+        return undefined;
+      });
+      return res.status(imageUploaded ? 200 : 500).send(imageUploaded ? imageUploaded : undefined);
     }
     return res.status(500).send();
   },

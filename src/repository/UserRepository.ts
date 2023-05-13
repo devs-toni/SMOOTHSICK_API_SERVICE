@@ -8,7 +8,6 @@ export const UserRepository = {
             if (!userExist) return await UserModel.create(user);
             return 0;
         } catch (error) {
-            console.log(error);
             return undefined;
         }
     },

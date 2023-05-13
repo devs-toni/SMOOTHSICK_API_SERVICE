@@ -29,7 +29,6 @@ export const TrackController = {
   },
 
   upload: async (req: MulterRequest, res: any) => {
-    console.log(req.files.audio.name);
     if (req.files?.audio.name) {
       const imageUploaded = await uploadAudioFile(
         req.files.audio.name,

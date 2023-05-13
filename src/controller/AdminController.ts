@@ -57,7 +57,6 @@ export const AdminController = {
                   //SAVE ALBUM TRACKS
                   const tracklist = data.data;
                   tracklist.map(async (tr: ITrack) => {
-                    console.log(tr);
                     const track: ITrack = {
                       id: tr.id,
                       readable: tr.readable,

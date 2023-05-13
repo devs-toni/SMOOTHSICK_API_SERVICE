@@ -171,7 +171,6 @@ export const UserController = {
 
   async changeUserName(req: Request, res: Response) {
     const { id, userName } = req.body;
-    console.log(userName);
     try {
       const updateUserName = await UserRepository.FindByIdAndUpdateUserName(id, userName)
       if (updateUserName) return res.status(201).send("User name updated successfully")

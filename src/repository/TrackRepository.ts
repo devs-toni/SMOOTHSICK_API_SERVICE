@@ -56,7 +56,6 @@ export const TrackRepository = {
   },
 
   updateById: async (trackId: string, track: ITrack) => {
-    console.log(trackId);
     return await TrackModel.updateOne(
       { id: trackId },
       { $set: { title: track.title, title_short: track.title_short } }

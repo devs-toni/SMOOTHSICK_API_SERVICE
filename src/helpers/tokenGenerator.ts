@@ -9,7 +9,6 @@ export const tokenGenerator = (id = "") => {
             expiresIn: "24h",
         }, (err: string, token: string) => {
             if (err) {
-                console.log(err)
                 reject(err)
             } else {
                 resolve(token)

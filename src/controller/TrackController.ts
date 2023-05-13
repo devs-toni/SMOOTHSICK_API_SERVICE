@@ -34,12 +34,16 @@ export const TrackController = {
       const imageUploaded = await uploadAudioFile(
         req.files.audio.name,
         req.files.audio.tempFilePath
-      ).then((res) => {
-        return res;
-      }).catch((err) => {
-        return undefined;
-      });
-      return res.status(imageUploaded ? 200 : 500).send(imageUploaded ? imageUploaded : undefined);
+      )
+        .then((res) => {
+          return res;
+        })
+        .catch((err) => {
+          return undefined;
+        });
+      return res
+        .status(imageUploaded ? 200 : 500)
+        .send(imageUploaded ? imageUploaded : undefined);
     }
     return res.status(500).send();
   },
@@ -208,6 +212,13 @@ export const TrackController = {
     }
     if (result?.acknowledged) res.send();
     else res.status(500).send();
+  },
+
+  update: async (req: Request, res: Response) => {
+    const trackId = req.params.id;
+    const newTrack = req.body.newTrack;
+    const result = await TrackRepository.updateById(trackId, newTrack);
+    return res.status(result.acknowledged ? 200 : 500).send(result);
   },
 
   deleteSong: async (req: Request, res: Response) => {

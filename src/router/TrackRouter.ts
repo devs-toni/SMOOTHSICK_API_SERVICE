@@ -6,6 +6,7 @@ export const TrackRouter = Router();
 
 TrackRouter.get("/", TrackController.getAll);
 TrackRouter.post("/", tokenChecker, TrackController.save);
+TrackRouter.put("/:id", tokenChecker, TrackController.update)
 TrackRouter.post("/upload", tokenChecker, TrackController.upload);
 TrackRouter.get("/home", TrackController.getAllHome);
 TrackRouter.get("/more", TrackController.getMoreHome);

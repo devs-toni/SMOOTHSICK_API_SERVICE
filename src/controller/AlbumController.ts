@@ -115,17 +115,11 @@ export const AlbumController = {
         artist_id: track.artist_id,
         album_id: track.album_id,
         artist_name: artist[0]?.name,
-        label: album[0].label
+        label: album[0].label,
+        likes: track.likes
       }
       newArr.push(trackDto)
-
     }))
-
-
     return res.send(newArr);
-
-
   }
-
-
 };

@@ -11,4 +11,4 @@ PlaylistRouter.get("/more", PlaylistController.getMoreHome);
 PlaylistRouter.get("/search", PlaylistController.search);
 PlaylistRouter.patch("/like/:id", tokenChecker, PlaylistController.toggleLike);
 PlaylistRouter.get("/:id",PlaylistController.getById);
-
+PlaylistRouter.post("/newPlaylist", PlaylistController.UserPlaylist);

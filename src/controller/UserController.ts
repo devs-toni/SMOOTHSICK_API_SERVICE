@@ -6,22 +6,37 @@ import { TrackRepository } from "../repository/TrackRepository";
 import { AlbumRepository } from "../repository/AlbumRepository";
 import { tokenGenerator } from "../helpers/tokenGenerator";
 import { ArtistRepository } from "../repository/ArtistRepository";
-import { Document } from "mongoose";
-import { IAlbum } from "../models/Album";
 import { ITrackDto } from "../models/Track";
+import { PlaylistRepository } from "../repository/PlaylistRepository";
 const bcrypt = require("bcrypt");
 
 export const UserController = {
-  async getAll(req: Request, res: Response) { 
+  async getAll(req: Request, res: Response) {
     const users = await UserRepository.getAll();
     res.send(users);
+  },
+
+  async getPlaylists(req: Request, res: Response) {
+    const userId = res.locals.user.id;
+    const playlists = await PlaylistRepository.findByCreatorId(userId);
+    res.status(201).send(playlists)
+  },
+
+  async deletePlaylist(req: Request, res: Response) {
+    const playlistId = req.params.id;
+    try {
+      const deletedPlaylist = await PlaylistRepository.FindByIdAndDelete(playlistId);
+      if (deletedPlaylist) return res.status(201).send("Playlist deleted successfully")
+    } catch (error) {
+      return res.status(500).send("Error deleting playlist")
+    }
+
   },
 
   async getFavourites(req: Request, res: Response) {
     const userId = res.locals.user.id;
     const tracks = await TrackRepository.findFavouritesByUserId(userId);
     const finalData: ITrackDto[] = [];
-
     await Promise.all(
       tracks.map(
         async ({
@@ -37,7 +52,6 @@ export const UserController = {
           if (album_id) {
             const album = await AlbumRepository.findById(album_id);
             const artist = await ArtistRepository.findById(artist_id!);
-            
             if (album.length !== 0) {
               finalData.push({
                 id,
@@ -92,11 +106,9 @@ export const UserController = {
       id: userData.id,
     };
     const currentUser = await UserRepository.get(user.email);
-
     if (typeof currentUser === "undefined")
       return res.status(401).send("Incorrect login data");
     const token = await tokenGenerator(currentUser.id);
-
     await bcrypt.compare(
       userData.password,
       currentUser?.password,
@@ -185,7 +197,6 @@ export const UserController = {
     const { id, userEmail } = req.body;
     try {
       const currentUser = await UserRepository.get(userEmail);
-
       if (currentUser) return res.status(204).send("Email already exists");
       if (!currentUser) {
         const updateUserEmail = await UserRepository.FindByIdAndUpdateEmail(id, userEmail)

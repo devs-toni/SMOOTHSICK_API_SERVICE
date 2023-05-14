@@ -1,26 +1,49 @@
 import { Request, Response } from "express";
 import { PlaylistRepository } from "../repository/PlaylistRepository";
+import { IUserPlaylist } from "../models/Playlist";
 
 export const PlaylistController = {
-  createPlaylist: async  (req: Request, res: Response)=> {
+
+  createPlaylist: async (req: Request, res: Response) => {
     const { body } = req
     try {
-        const newPlaylist = await PlaylistRepository.save({
-            ...body
-        });
-
-        res.status(201).send({
-            status: true,
-            msg: "You have a new playlist",
-            data: newPlaylist,
-        })
+      const newPlaylist = await PlaylistRepository.save({
+        ...body
+      });
+      res.status(201).send({
+        status: true,
+        msg: "You have a new playlist",
+        data: newPlaylist,
+      })
     } catch (error) {
-        res.status(500).send({
-            status: false,
-            msg: error,
-        })
+      res.status(500).send({
+        status: false,
+        msg: error,
+      })
     }
-},
+  },
+
+  UserPlaylist: async (req: Request, res: Response) => {
+    const { title, description, user_id, playlist_id } = req.body
+    const playlist = {
+      id: playlist_id,
+      title: title,
+      description: description,
+      duration: 300,
+      nb_tracks: 10,
+      picture: "picture",
+      fans: 0,
+      tracklist: [],
+      creator_id: user_id
+    }
+    try {
+      const newPlaylist = await PlaylistRepository.saveUserPlaylist(playlist);
+      res.status(201).send(newPlaylist)
+    } catch (error) {
+      res.status(500).send("Something went wrong")
+    }
+  },
+
   getAll: async (req: Request, res: Response) => {
     const allPlaylists = await PlaylistRepository.findAll();
     return res.send(allPlaylists);

@@ -2,14 +2,31 @@ import { IPlaylist } from "../models/Playlist";
 import { PlaylistModel } from "./schemas/Playlist";
 
 export const PlaylistRepository = {
+
   save: async (playlist: IPlaylist) => {
     const playlistExists = await PlaylistModel.findOne({ id: playlist.id });
     if (!playlistExists) {
       return await PlaylistModel.create(playlist);
     }
+
   },
- 
+
+  saveUserPlaylist: async (playlist: IPlaylist) => {
+    const playlistExists = await PlaylistModel.findOne({ id: playlist.creator_id })
+    if (!playlistExists) {
+      return await PlaylistModel.create(playlist);
+    }
+  },
+
+  FindByIdAndDelete: async (id: string) => {
+    const deletePlaylist = await PlaylistModel.findByIdAndDelete({ _id: id });
+    if (deletePlaylist) return deletePlaylist
+    return undefined
+  },
+
   findById: async (id: string) => await PlaylistModel.find({ id: id }),
+
+  findByCreatorId: async (id: string) => await PlaylistModel.find({ creator_id: id }),
 
   findAll: async () => await PlaylistModel.find({}),
 

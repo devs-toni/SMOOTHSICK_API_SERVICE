@@ -7,8 +7,10 @@ import { ResetPassword } from "../controller/ResetPassController";
 export const UserRouter = Router();
 
 UserRouter
-    .get("/", UserController.getAll)
-    .get("/favourites", tokenChecker ,UserController.getFavourites)
+    .get("/", UserController.getAll) // Get all
+    .get("/favourites", tokenChecker, UserController.getFavourites)// Get favourites
+    .get("/playlists", tokenChecker, UserController.getPlaylists) // Get playlists of user
+    .delete("/deletePlaylist/:id", tokenChecker, UserController.deletePlaylist)// Delete playlist")
     .post("/register", UserController.register)// Get register
     .post("/authenticate", UserController.authenticate)// Get login
     .post("/authorizate", tokenChecker, UserController.authorizate)// Get Check user rol

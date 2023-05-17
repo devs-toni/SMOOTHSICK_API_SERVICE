@@ -1,16 +1,35 @@
-import { IUserLogin, IUserRegister } from "../models/User";
+import { IUserLogin, IUserRegister, IUserRegisterGoogle } from "../models/User";
 import { UserModel } from "./schemas/User";
+import { UserGoogleModel } from "./schemas/UserGoogle";
 
 export const UserRepository = {
+
     save: async (user: IUserRegister) => {
         try {
             const userExist = await UserModel.findOne({ email: user.email });
-            if (!userExist) return await UserModel.create(user);
+            const userGoogleExist = await UserGoogleModel.findOne({ email: user.email });
+            if (!userExist && !userGoogleExist) return await UserModel.create(user);
             return 0;
         } catch (error) {
+            console.error(error);
             return undefined;
         }
     },
+
+    saveGoogle: async (user: IUserRegisterGoogle) => {
+        try {
+            const userExistGoogle = await UserGoogleModel.findOne({ email: user.email })
+            const userExist = await UserModel.findOne({ email: user.email });
+            if (!userExistGoogle && !userExist) return await UserGoogleModel.create(user);
+            if (userExist) return 0
+            return userExistGoogle;
+        }
+        catch (error) {
+            console.error(error)
+            return undefined;
+        }
+    },
+
 
     get: async (email: String) => {
         try {
@@ -26,8 +45,20 @@ export const UserRepository = {
     getById: async (id: String) => {
         try {
             const userFinded = await UserModel.findOne({ _id: id });
+            console.log(userFinded);
+
             if (userFinded) return userFinded;
             else return undefined;
+        } catch (err) {
+            console.error(err);
+            return undefined;
+        }
+    },
+
+    googleGetById: async (id: String) => {
+        try {
+            const userFinded = await UserGoogleModel.findOne({ _id: id });
+            if (userFinded) return userFinded;
         } catch (err) {
             console.error(err);
             return undefined;

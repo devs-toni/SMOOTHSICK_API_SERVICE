@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { FormLogin, FormRegister } from "../entity/User";
-import { IGetUserData, IUserLogin, IUserRegister } from "../models/User";
+import { FormLogin, FormRegister, FormRegisterGoogle } from "../entity/User";
+import { IGetGoogleUserData, IGetUserData, IUserLogin, IUserRegister, IUserRegisterGoogle } from "../models/User";
 import { UserRepository } from "../repository/UserRepository";
 import { TrackRepository } from "../repository/TrackRepository";
 import { AlbumRepository } from "../repository/AlbumRepository";
@@ -30,7 +30,6 @@ export const UserController = {
     } catch (error) {
       return res.status(500).send("Error deleting playlist")
     }
-
   },
 
   async getFavourites(req: Request, res: Response) {
@@ -98,6 +97,32 @@ export const UserController = {
     });
   },
 
+  async authenticateGoogle(req: Request, res: Response) {
+    const googleUser: FormRegisterGoogle = req.body;
+    const user: IUserRegisterGoogle = {
+      name: googleUser.firstName,
+      last_name: googleUser.lastName,
+      user_name: googleUser.firstName,
+      email: googleUser.email,
+      picture: googleUser.profilePicture,
+      role: "U",
+    }
+    const currentUser = await UserRepository.get(user.email)
+    if (typeof currentUser === "undefined") {
+      const userGoogle = await UserRepository.saveGoogle(user);
+      if (userGoogle) {
+        const token = await tokenGenerator(userGoogle.id);
+        if (token) return res.status(201).send({ token, userGoogle })
+      } else {
+        return res.status(500).send("Something went wrong");
+      }
+    } else {
+      return res.status(409).send("User already exists")
+
+    }
+
+  },
+
   async authenticate(req: Request, res: Response) {
     const params: FormLogin = req.body;
     const { userData } = params;
@@ -122,9 +147,11 @@ export const UserController = {
     );
   },
 
+
+
   async authorizate(_req: Request, res: Response) {
     const user = res.locals.user;
-    if (user) {
+    if (res.locals.user) {
       const currentUser = await UserRepository.getById(user.id);
       if (currentUser?.role === "A") return res.send(true);
       if (currentUser?.role === "U") return res.send(false);
@@ -133,8 +160,24 @@ export const UserController = {
 
   async getUserData(req: Request, res: Response) {
     const user = res.locals.user;
-    const { id } = user;
-    if (id) {
+    const { id } = user
+
+
+    if (user.password === undefined) {
+      const currentUser = await UserRepository.googleGetById(id);
+
+      const userToSend: IGetGoogleUserData = {
+        id: currentUser?.id,
+        name: currentUser?.name,
+        last_name: currentUser?.last_name,
+        user_name: currentUser?.user_name,
+        email: currentUser?.email,
+        picture: currentUser?.picture,
+        role: currentUser?.role,
+      }
+      if (userToSend) return res.status(200).send(userToSend);
+      return res.status(500).send("Something went wrong");
+    } else {
       const currentUser = await UserRepository.getById(id);
       const userToSend: IGetUserData = {
         id: currentUser?.id,
@@ -145,9 +188,10 @@ export const UserController = {
         role: currentUser?.role,
       };
       if (userToSend) return res.status(200).send(userToSend);
-      if (!userToSend) return res.status(401).send("User not found");
       return res.status(500).send("Something went wrong");
     }
+
+
   },
 
   async validatePass(req: Request, res: Response) {

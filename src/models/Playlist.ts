@@ -5,7 +5,7 @@ export interface IPlaylist {
   description?: string;
   duration: number;
   nb_tracks: number;
-  picture: string;
+  picture?: string;
   fans: number;
   tracklist: string[],
   creator_id: string;

@@ -68,11 +68,32 @@ export const TrackController = {
     return res.send(track);
   },
 
+  getWithImageById: async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const track = await TrackRepository.findById(id);
+    if (track?.album_id && track?.artist_id) {
+      const album = await AlbumRepository.findById(track?.album_id);
+      const artist = await ArtistRepository.findById(track?.artist_id);
+      const newTrack = {
+        id: track.id,
+        title: track.title,
+        duration: track.duration,
+        rank: track.rank,
+        preview: track.preview,
+        album_id: track.album_id,
+        album_cover: album[0]?.cover,
+        artist_name: artist[0]?.name ? artist[0].name : "",
+      };
+      return res.send(newTrack);
+    }
+    return res.send(track);
+  },
+
   getAll: async (req: Request, res: Response) => {
     const allTracks = await TrackRepository.findAll();
     return res.send(allTracks);
   },
-  
+
   getAllHome: async (req: Request, res: Response) => {
     const artists = await ArtistRepository.findAllHome();
     let finalData: ITrackDto[] = [];

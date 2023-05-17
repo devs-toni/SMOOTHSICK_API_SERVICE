@@ -3,83 +3,83 @@ import { PlaylistRepository } from "../repository/PlaylistRepository";
 import { IUserPlaylist } from "../models/Playlist";
 import { TrackRepository } from "../repository/TrackRepository";
 import { AlbumRepository } from "../repository/AlbumRepository";
-
+import { ITrack } from "../models/Track";
 
 export const PlaylistController = {
-
   createPlaylist: async (req: Request, res: Response) => {
-    const { body } = req
+    const { body } = req;
     try {
       const newPlaylist = await PlaylistRepository.save({
-        ...body
+        ...body,
       });
       res.status(201).send({
         status: true,
         msg: "You have a new playlist",
         data: newPlaylist,
-      })
+      });
     } catch (error) {
       res.status(500).send({
         status: false,
         msg: error,
-      })
+      });
     }
   },
 
   AddTrackToPlaylist: async (req: Request, res: Response) => {
-    const { trackId, listId } = req.body
-    const userPlaylist = await PlaylistRepository.findById(listId)
+    const { trackId, listId } = req.body;
+    const userPlaylist = await PlaylistRepository.findById(listId);
     if (userPlaylist) {
-      const trackAdded = await PlaylistRepository.addToPlaylist(userPlaylist[0], trackId)
+      const trackAdded = await PlaylistRepository.addToPlaylist(
+        userPlaylist[0],
+        trackId
+      );
       if (trackAdded) {
-        res.status(201).send(userPlaylist)
+        res.status(201).send(userPlaylist);
       }
     } else {
-      res.status(404).send("Playlist not found")
+      res.status(404).send("Playlist not found");
     }
   },
 
-  getPlaylistTracks: async (req: Request, res: Response) => {
-    const { tracklist } = req.body
-    let finalData: Object[] = []
-    if (tracklist) {
-      await Promise.all(
-        tracklist.map(async (trackId: any) => {
-          const track: any = await TrackRepository.findById(trackId)
-          finalData.push(track)
-        })
-      )
-      res.status(201).send(finalData)
+  getOwnPlaylistImage: async (req: Request, res: Response) => {
+    const playlistId = req.params.id;
+    const playlist = await PlaylistRepository.findById(playlistId);
+    const tracks = playlist[0].tracklist;
+    let idTrackChoosed = "";
+    await Promise.all(
+      tracks.map(async (track: string) => {
+        const tempTrack = await TrackRepository.findById(track);
+        if (tempTrack?.album_id && idTrackChoosed.length === 0) idTrackChoosed = track;
+      })
+    );
+
+    const tempTrack = await TrackRepository.findById(idTrackChoosed);
+    if (tempTrack?.album_id) {
+      const album = await AlbumRepository.findById(tempTrack?.album_id);
+      return res.send(album[0].cover);
     }
+    return res.status(404).send();
   },
 
-
-
-  UserPlaylist: async (req: Request, res: Response) => {
-    const { title, user_id, playlist_id } = req.body
+  saveUserPlaylist: async (req: Request, res: Response) => {
+    const { title, user_id, playlist_id } = req.body;
     const playlist = {
       id: playlist_id,
       title: title,
       description: "",
       duration: 300,
       nb_tracks: 10,
-      picture: "picture",
       fans: 0,
       tracklist: [],
-      creator_id: user_id
-    }
+      creator_id: user_id,
+    };
     try {
       const newPlaylist = await PlaylistRepository.saveUserPlaylist(playlist);
-      res.status(201).send(newPlaylist)
+      res.status(201).send(newPlaylist);
     } catch (error) {
-      res.status(500).send("Something went wrong")
+      res.status(500).send("Something went wrong");
     }
   },
-
-
-
-
-
 
   getAll: async (req: Request, res: Response) => {
     const allPlaylists = await PlaylistRepository.findAll();

@@ -10,7 +10,7 @@ export const TrackRepository = {
   },
 
   findById: async (trackId: string) =>
-    await TrackModel.findOne({ id: trackId }),
+  await TrackModel.findOne({ id: trackId }),
 
   findAll: async () => await TrackModel.find({ disk_number: { $ne: -1 } }),
 

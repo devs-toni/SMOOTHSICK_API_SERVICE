@@ -1,6 +1,9 @@
-import { Request, Response } from "express";
+import e, { Request, Response } from "express";
 import { PlaylistRepository } from "../repository/PlaylistRepository";
 import { IUserPlaylist } from "../models/Playlist";
+import { TrackRepository } from "../repository/TrackRepository";
+import { AlbumRepository } from "../repository/AlbumRepository";
+
 
 export const PlaylistController = {
 
@@ -23,12 +26,41 @@ export const PlaylistController = {
     }
   },
 
+  AddTrackToPlaylist: async (req: Request, res: Response) => {
+    const { trackId, listId } = req.body
+    const userPlaylist = await PlaylistRepository.findById(listId)
+    if (userPlaylist) {
+      const trackAdded = await PlaylistRepository.addToPlaylist(userPlaylist[0], trackId)
+      if (trackAdded) {
+        res.status(201).send(userPlaylist)
+      }
+    } else {
+      res.status(404).send("Playlist not found")
+    }
+  },
+
+  getPlaylistTracks: async (req: Request, res: Response) => {
+    const { tracklist } = req.body
+    let finalData: Object[] = []
+    if (tracklist) {
+      await Promise.all(
+        tracklist.map(async (trackId: any) => {
+          const track: any = await TrackRepository.findById(trackId)
+          finalData.push(track)
+        })
+      )
+      res.status(201).send(finalData)
+    }
+  },
+
+
+
   UserPlaylist: async (req: Request, res: Response) => {
-    const { title, description, user_id, playlist_id } = req.body
+    const { title, user_id, playlist_id } = req.body
     const playlist = {
       id: playlist_id,
       title: title,
-      description: description,
+      description: "",
       duration: 300,
       nb_tracks: 10,
       picture: "picture",
@@ -43,6 +75,11 @@ export const PlaylistController = {
       res.status(500).send("Something went wrong")
     }
   },
+
+
+
+
+
 
   getAll: async (req: Request, res: Response) => {
     const allPlaylists = await PlaylistRepository.findAll();

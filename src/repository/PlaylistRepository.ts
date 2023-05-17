@@ -24,6 +24,15 @@ export const PlaylistRepository = {
     return undefined
   },
 
+  addToPlaylist: async (userPlaylist: Object, trackId: string) => {
+    const trackAdded = await PlaylistModel.updateOne(userPlaylist, { $push: { tracklist: trackId } })
+    if (trackAdded) return trackAdded
+    return undefined
+  },
+
+
+  findOne: async (id: string) => await PlaylistModel.find({ tracklist: id }),
+
   findById: async (id: string) => await PlaylistModel.find({ id: id }),
 
   findByCreatorId: async (id: string) => await PlaylistModel.find({ creator_id: id }),

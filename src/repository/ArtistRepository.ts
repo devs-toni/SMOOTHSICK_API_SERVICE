@@ -12,10 +12,10 @@ export const ArtistRepository = {
   findAll: async () => await ArtistModel.find({}).sort({ name: -1 }),
 
   findAllHome: async () =>
-    await ArtistModel.find({}).sort({ nb_fan: -1 }).limit(13),
+    await ArtistModel.find({}).sort({ nb_fan: -1 }).limit(50),
 
   findMoreHome: async () =>
-    await ArtistModel.find({}).sort({ nb_fan: 1 }).limit(13),
+    await ArtistModel.find({}).sort({ nb_fan: 1 }).limit(50),
 
   findById: async (id: string) => await ArtistModel.find({ id: id }),
 

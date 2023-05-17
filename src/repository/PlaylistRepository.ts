@@ -31,10 +31,10 @@ export const PlaylistRepository = {
   findAll: async () => await PlaylistModel.find({}),
 
   findAllHome: async () =>
-    await PlaylistModel.find({}).sort({ fans: -1 }).limit(13),
+    await PlaylistModel.find({}).sort({ fans: -1 }).limit(50),
 
   findMoreHome: async () =>
-    await PlaylistModel.find({}).sort({ fans: 1 }).limit(13),
+    await PlaylistModel.find({}).sort({ fans: 1 }).limit(50),
 
   findLikeById: async (playlistId: string, userId: string) =>
     await PlaylistModel.find({ id: playlistId, likes: userId }),

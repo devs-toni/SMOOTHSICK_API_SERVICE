@@ -34,6 +34,7 @@ export const UserController = {
 
   async getFavourites(req: Request, res: Response) {
     const userId = res.locals.user.id;
+    console.log(userId)
     const tracks = await TrackRepository.findFavouritesByUserId(userId);
     const finalData: ITrackDto[] = [];
     await Promise.all(

@@ -18,6 +18,17 @@ interface MulterRequest extends Request {
       name: string;
       tempFilePath: string;
     };
+    image: {
+      name: string;
+      data: Object;
+      size: number;
+      encoding: string;
+      tempFilePath: string;
+      truncated: boolean;
+      mimetype: string;
+      md5: string;
+      mv: () => void;
+    };
   };
 }
 
@@ -28,23 +39,26 @@ export const TrackController = {
     return res.send(result);
   },
 
-  upload: async (req: MulterRequest, res: any) => {
-    if (req.files?.audio.name) {
-      const imageUploaded = await uploadAudioFile(
-        req.files.audio.name,
-        req.files.audio.tempFilePath
-      )
-        .then((res) => {
-          return res;
-        })
-        .catch((err) => {
-          return undefined;
-        });
-      return res
-        .status(imageUploaded ? 200 : 500)
-        .send(imageUploaded ? imageUploaded : undefined);
-    }
-    return res.status(500).send();
+  uploadAudio: async (req: MulterRequest, res: any) => {
+    const audioUploaded = await uploadAudioFile(
+      req.files.audio.name,
+      req.files.audio.tempFilePath
+    )
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return undefined;
+      });
+    if (typeof audioUploaded === "undefined") return res.status(500).send();
+    return res.send(audioUploaded);
+  },
+
+  uploadImage: async (req: MulterRequest, res: any) => {
+    const imageUploaded = await uploadImage(req.files.image.tempFilePath);
+    if (typeof imageUploaded === "undefined") return res.status(500).send();
+    console.log(imageUploaded);
+    return res.send(imageUploaded);
   },
 
   getById: async (req: Request, res: Response) => {
@@ -52,10 +66,12 @@ export const TrackController = {
     const track = await TrackRepository.findById(id);
     return res.send(track);
   },
+
   getAll: async (req: Request, res: Response) => {
     const allTracks = await TrackRepository.findAll();
     return res.send(allTracks);
   },
+  
   getAllHome: async (req: Request, res: Response) => {
     const artists = await ArtistRepository.findAllHome();
     let finalData: ITrackDto[] = [];
@@ -152,6 +168,11 @@ export const TrackController = {
     return res.send(finalData);
   },
 
+  getOwnerHome: async (req: Request, res: Response) => {
+    const tracks = await TrackRepository.findOwner();
+    return res.send(tracks);
+  },
+
   getTop: async (req: Request, res: Response) => {
     const id = req.params.id;
     let finalData: ITrackDto[] = [];
@@ -246,7 +267,7 @@ export const TrackController = {
           if (album_id) {
             const album = await AlbumRepository.findById(album_id);
             const artist = await ArtistRepository.findById(artist_id!);
-            if (album.length !== 0) {
+            if (album.length !== 0 && artist.length !== 0) {
               finalData.push({
                 id,
                 title,

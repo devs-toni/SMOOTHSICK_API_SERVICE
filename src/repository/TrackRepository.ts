@@ -20,6 +20,9 @@ export const TrackRepository = {
       disk_number: { $ne: -1 },
     }).limit(4),
 
+  findOwner: async () =>
+    await TrackModel.find({ disk_number: -1 }).limit(13),
+
   findBestSong: async (artistId: string) =>
     await TrackModel.find({ artist_id: artistId, disk_number: { $ne: -1 } })
       .sort({ rank: -1 })

@@ -3,9 +3,19 @@ export interface FormRegister {
         name: string,
         lastname: string,
         username: string,
-        email: string, password:
-        string, token: string
+        email: string, 
+        password:string, 
+        token: string
     }
+}
+
+export interface FormRegisterGoogle {
+        email: string,
+        firstName: string,
+        id: string,
+        lastName: string,
+        profilePicture: string,
+    
 }
 
 export interface FormLogin {
@@ -16,15 +26,3 @@ export interface FormLogin {
     }
 }
 
-
-// export interface GetUserData {
-//     getUserData: {
-//         id: string;
-//         name: string;
-//         last_name: string;
-//         user_name: string;
-//         email: string;
-//         role: string;
-//     },
-//     token: string
-// }

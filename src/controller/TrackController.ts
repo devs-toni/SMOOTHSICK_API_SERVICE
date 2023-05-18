@@ -58,7 +58,6 @@ export const TrackController = {
   uploadImage: async (req: MulterRequest, res: any) => {
     const imageUploaded = await uploadImage(req.files.image.tempFilePath);
     if (typeof imageUploaded === "undefined") return res.status(500).send();
-    console.log(imageUploaded);
     return res.send(imageUploaded);
   },
 

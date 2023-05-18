@@ -44,6 +44,9 @@ export const PlaylistController = {
   getOwnPlaylistImage: async (req: Request, res: Response) => {
     const playlistId = req.params.id;
     const playlist = await PlaylistRepository.findById(playlistId);
+    if (playlist[0].tracklist.length < 1) {
+      return res.status(204).send("Empty tracklist")
+    }
     const tracks = playlist[0].tracklist;
     let idTrackChoosed = "";
     await Promise.all(

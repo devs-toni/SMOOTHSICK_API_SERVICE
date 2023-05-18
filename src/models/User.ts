@@ -14,6 +14,7 @@ export interface IUserRegisterGoogle {
     email: string;
     user_name: string;
     picture: string
+    type: string
     role: string;
 }
 
@@ -42,4 +43,5 @@ export interface IGetGoogleUserData {
     email: string;
     picture: string
     role: string;
+    type: string
 }

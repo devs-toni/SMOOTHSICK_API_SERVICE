@@ -24,7 +24,6 @@ export const PlaylistRepository = {
 
   FindByIdAndDelete: async (id: string) => {
     const deletePlaylist = await PlaylistModel.deleteOne({ id });
-    console.log(deletePlaylist)
     if (deletePlaylist) return deletePlaylist;
     return undefined;
   },

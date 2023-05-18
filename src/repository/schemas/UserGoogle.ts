@@ -7,6 +7,7 @@ const UserGoogleSchema: Schema = new Schema(
     email: { type: String, required: true },
     user_name: { type: String, required: true },
     picture: { type: String, required: true },
+    type: { type: String, required: true },
     role: { type: String, required: true },
   },
   {

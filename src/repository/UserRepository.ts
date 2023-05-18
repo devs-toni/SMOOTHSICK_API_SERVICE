@@ -45,8 +45,6 @@ export const UserRepository = {
     getById: async (id: String) => {
         try {
             const userFinded = await UserModel.findOne({ _id: id });
-            console.log(userFinded);
-
             if (userFinded) return userFinded;
             else return undefined;
         } catch (err) {
@@ -91,6 +89,17 @@ export const UserRepository = {
         }
     },
 
+    FindByIdAndUpdateGoogleUserName: async (id: String, userName: String) => {
+        try {
+            const updateUserName = await UserGoogleModel.findByIdAndUpdate({ _id: id }, { $set: { user_name: userName } })
+            if (updateUserName) return updateUserName;
+            return undefined;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    },
+
     FindByIdAndUpdateEmail: async (id: String, email: String) => {
         try {
             const updateUserEmail = await UserModel.findByIdAndUpdate({ _id: id }, { $set: { email } })
@@ -111,7 +120,17 @@ export const UserRepository = {
             console.error(error);
         }
 
-    }
+    },
 
+    FindByIdAndDeleteGoogle: async (id: String) => {
+        try {
+            const deletedUser = await UserGoogleModel.findByIdAndDelete({ _id: id })
+            if (deletedUser) return deletedUser;
+            return undefined;
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
 }
 

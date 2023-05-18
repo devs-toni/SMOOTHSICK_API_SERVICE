@@ -15,6 +15,7 @@ export interface FormRegisterGoogle {
         id: string,
         lastName: string,
         profilePicture: string,
+        type: string
     
 }
 

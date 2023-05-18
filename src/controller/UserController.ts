@@ -34,7 +34,6 @@ export const UserController = {
 
   async getFavourites(req: Request, res: Response) {
     const userId = res.locals.user.id;
-    console.log(userId)
     const tracks = await TrackRepository.findFavouritesByUserId(userId);
     const finalData: ITrackDto[] = [];
     await Promise.all(
@@ -105,6 +104,7 @@ export const UserController = {
       user_name: googleUser.firstName,
       email: googleUser.email,
       picture: googleUser.profilePicture,
+      type: "G-User",
       role: "U",
     }
     const currentUser = await UserRepository.get(user.email)
@@ -161,8 +161,6 @@ export const UserController = {
   async getUserData(req: Request, res: Response) {
     const user = res.locals.user;
     const { id } = user
-
-
     if (user.password === undefined) {
       const currentUser = await UserRepository.googleGetById(id);
 
@@ -174,6 +172,7 @@ export const UserController = {
         email: currentUser?.email,
         picture: currentUser?.picture,
         role: currentUser?.role,
+        type: currentUser?.type,
       }
       if (userToSend) return res.status(200).send(userToSend);
       return res.status(500).send("Something went wrong");
@@ -228,9 +227,13 @@ export const UserController = {
 
   async changeUserName(req: Request, res: Response) {
     const { id, userName } = req.body;
+    console.log(id);
+    console.log(userName);
+
     try {
       const updateUserName = await UserRepository.FindByIdAndUpdateUserName(id, userName)
-      if (updateUserName) return res.status(201).send("User name updated successfully")
+      const updateGoodleUserName = await UserRepository.FindByIdAndUpdateGoogleUserName(id, userName)
+      if (updateUserName || updateGoodleUserName) return res.status(201).send("User name updated successfully")
       return res.status(204).send("User does not exist")
     } catch (error) {
       console.error(error);
@@ -258,7 +261,8 @@ export const UserController = {
     const { id } = req.params;
     try {
       const userDeleted = await UserRepository.FindByIdAndDelete(id);
-      if (userDeleted) return res.status(201).send("User deleted successfully")
+      const userGoogleDeleted = await UserRepository.FindByIdAndDeleteGoogle(id);
+      if (userDeleted || userGoogleDeleted) return res.status(201).send("User deleted successfully")
       return res.status(204).send("User does not exist")
     } catch (error) {
       console.error(error);

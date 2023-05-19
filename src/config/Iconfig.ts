@@ -9,6 +9,11 @@ export interface env_parameters {
     db: {
         DB_URI: string
     }
+    cloudinary: {
+      NAME: string,
+      KEY: string,
+      SECRET: string,
+    }
 }
 
 

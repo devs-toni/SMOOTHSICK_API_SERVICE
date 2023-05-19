@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { ITrack } from "../../models/Track";
 
 const TrackSchema: Schema = new Schema(
   {
@@ -11,12 +12,13 @@ const TrackSchema: Schema = new Schema(
     disk_number: { type: Number, required: false },
     rank: { type: Number, required: true },
     preview: { type: String, required: false },
-    artist_id: { type: String, required: true },
-    album_id: { type: String, required: true },
+    artist_id: { type: String, required: false },
+    album_id: { type: String, required: false },
+    likes: { type: Array, required: false, default: [] },
   },
   {
     timestamps: true,
   }
 );
 
-export const TrackModel = model("Track", TrackSchema);
+export const TrackModel = model<ITrack>("Track", TrackSchema);

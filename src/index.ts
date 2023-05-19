@@ -1,6 +1,7 @@
 import { connectDb } from "./db/connect";
 import CONFIGURATION from "./config/config";
 import { app } from "./server";
+import { logger } from "./config/logger/winston";
 
 const { app: env_app } = CONFIGURATION;
 
@@ -11,4 +12,4 @@ connectDb()
       console.log("Application running on port " + env_app.PORT);
     });
   })
-  .catch((err) => console.error(err));
+  .catch((err) => console.log(err));

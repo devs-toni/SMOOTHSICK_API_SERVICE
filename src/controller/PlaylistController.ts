@@ -4,6 +4,7 @@ import { IUserPlaylist } from "../models/Playlist";
 import { TrackRepository } from "../repository/TrackRepository";
 import { AlbumRepository } from "../repository/AlbumRepository";
 import { ITrack } from "../models/Track";
+import { type } from "os";
 
 export const PlaylistController = {
   createPlaylist: async (req: Request, res: Response) => {
@@ -44,7 +45,8 @@ export const PlaylistController = {
   getOwnPlaylistImage: async (req: Request, res: Response) => {
     const playlistId = req.params.id;
     const playlist = await PlaylistRepository.findById(playlistId);
-    if (playlist[0].tracklist.length < 1) {
+
+    if (typeof playlist[0] === 'undefined') {
       return res.status(204).send("Empty tracklist")
     }
     const tracks = playlist[0].tracklist;
@@ -55,13 +57,15 @@ export const PlaylistController = {
         if (tempTrack?.album_id && idTrackChoosed.length === 0) idTrackChoosed = track;
       })
     );
-
     const tempTrack = await TrackRepository.findById(idTrackChoosed);
     if (tempTrack?.album_id) {
       const album = await AlbumRepository.findById(tempTrack?.album_id);
       return res.send(album[0].cover);
     }
-    return res.status(404).send();
+    else if (!tempTrack) {
+      return res.status(204).send();
+    }
+    return res.status(404).send("Something went wrong")
   },
 
   removeFromPlaylist: async (req: Request, res: Response) => {
@@ -113,7 +117,31 @@ export const PlaylistController = {
 
   getMoreHome: async (req: Request, res: Response) => {
     const homePlaylists = await PlaylistRepository.findMoreHome();
+    await Promise.all(
+      homePlaylists.map(async (playlist) => {
+        if (!playlist.picture) {
+          const tracks = playlist.tracklist;
+          let idTrackChoosed = "";
+          await Promise.all(
+            tracks.map(async (track: string) => {
+              const tempTrack = await TrackRepository.findById(track);
+              if (tempTrack?.album_id && idTrackChoosed.length === 0) idTrackChoosed = track;
+            })
+          );
+          const tempTrack = await TrackRepository.findById(idTrackChoosed);
+          if (tempTrack?.album_id) {
+            const album = await AlbumRepository.findById(tempTrack?.album_id);
+            playlist.picture = album[0].cover;
+            return playlist;
+          }
+        }
+      })
+    )
+
+
+
     return res.send(homePlaylists);
+
   },
 
   toggleLike: async (req: Request, res: Response) => {

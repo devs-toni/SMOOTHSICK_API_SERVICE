@@ -70,6 +70,7 @@ export const TrackController = {
   getWithImageById: async (req: Request, res: Response) => {
     const id = req.params.id;
     const track = await TrackRepository.findById(id);
+
     if (track?.album_id && track?.artist_id) {
       const album = await AlbumRepository.findById(track?.album_id);
       const artist = await ArtistRepository.findById(track?.artist_id);
@@ -82,6 +83,7 @@ export const TrackController = {
         album_id: track.album_id,
         album_cover: album[0]?.cover,
         artist_name: artist[0]?.name ? artist[0].name : "",
+        likes: track.likes
       };
       return res.send(newTrack);
     }

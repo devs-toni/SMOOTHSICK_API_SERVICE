@@ -131,7 +131,7 @@ export const PlaylistController = {
           const tempTrack = await TrackRepository.findById(idTrackChoosed);
           if (tempTrack?.album_id) {
             const album = await AlbumRepository.findById(tempTrack?.album_id);
-            playlist.picture = album[0].cover;
+            playlist.picture = album[0]?.cover ? album[0].cover : "";
             return playlist;
           }
         }

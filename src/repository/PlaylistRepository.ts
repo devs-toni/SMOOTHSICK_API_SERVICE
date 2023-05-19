@@ -71,6 +71,18 @@ export const PlaylistRepository = {
   search: async (query: string) =>
     await PlaylistModel.find({ title: { $regex: query, $options: "i" } }),
 
+  removeFromPlaylist: async (playlistId: string, trackId: string) => {
+    try {
+      const trackRemoved = await PlaylistModel.updateOne(
+        { id: playlistId },
+        { $pull: { tracklist: trackId } }
+      );
+      return trackRemoved;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   deleteAll: async () => {
     const areDeleted = await PlaylistModel.deleteMany({});
     return areDeleted.acknowledged;

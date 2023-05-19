@@ -64,6 +64,23 @@ export const PlaylistController = {
     return res.status(404).send();
   },
 
+  removeFromPlaylist: async (req: Request, res: Response) => {
+    const { trackId, playlistId } = req.body;
+    try {
+      const trackRemoved = await PlaylistRepository.removeFromPlaylist(playlistId, trackId);
+      if (trackRemoved?.acknowledged) {
+        res.status(201).send('Removed successfully');
+      }
+    } catch (error) {
+      res.status(404).send("Playlist not found");
+    }
+
+  },
+
+
+
+
+
   saveUserPlaylist: async (req: Request, res: Response) => {
     const { title, user_id, playlist_id } = req.body;
     const playlist = {

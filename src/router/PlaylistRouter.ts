@@ -14,3 +14,5 @@ PlaylistRouter.get("/:id", PlaylistController.getById);
 PlaylistRouter.post("/newPlaylist", PlaylistController.saveUserPlaylist);
 PlaylistRouter.post("/addTrack", PlaylistController.AddTrackToPlaylist)
 PlaylistRouter.get("/image/:id", PlaylistController.getOwnPlaylistImage)
+PlaylistRouter.patch("/removeFromPlaylist", PlaylistController.removeFromPlaylist)
+

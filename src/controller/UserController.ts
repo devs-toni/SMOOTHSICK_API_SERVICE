@@ -26,7 +26,7 @@ export const UserController = {
     const playlistId = req.params.id;
     try {
       const deletedPlaylist = await PlaylistRepository.FindByIdAndDelete(playlistId);
-      if (deletedPlaylist) return res.status(201).send("Playlist deleted successfully")
+      if (deletedPlaylist) return res.status(201).send("Playlist deleted successfully");
     } catch (error) {
       return res.status(500).send("Error deleting playlist")
     }
@@ -227,8 +227,6 @@ export const UserController = {
 
   async changeUserName(req: Request, res: Response) {
     const { id, userName } = req.body;
-    console.log(id);
-    console.log(userName);
 
     try {
       const updateUserName = await UserRepository.FindByIdAndUpdateUserName(id, userName)

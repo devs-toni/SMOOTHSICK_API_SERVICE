@@ -1,6 +1,6 @@
 node_modules
 package-lock.json
-.env
+.env.development
 error.log
 all.log
 src/db/mongo_key.pem

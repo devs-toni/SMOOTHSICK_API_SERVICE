@@ -2,14 +2,13 @@ import { Request, Response } from "express";
 import { AlbumRepository } from "../repository/AlbumRepository";
 import { ArtistRepository } from "../repository/ArtistRepository";
 import { TrackRepository } from "../repository/TrackRepository";
-import { ITrackDto } from "../models/Track";
 
 export const AlbumController = {
   getById: async (req: Request, res: Response) => {
     const id = req.params.id;
     const album = await AlbumRepository.findById(id);
     const artist = await ArtistRepository.findById(album[0].artist_id);
-    let newObj: {} = {}
+    let newObj: unknown = {}
     await Promise.all(album.map(async (prop) => {
       const albumDto = {
         _id: prop._id,
@@ -34,7 +33,7 @@ export const AlbumController = {
 
   getAll: async (req: Request, res: Response) => {
     const allAlbums = await AlbumRepository.findAll();
-    let finalData: Object[] = [];
+    const finalData: unknown[] = [];
     await Promise.all(
       allAlbums.map(async (album) => {
         const artist = await ArtistRepository.findById(album.artist_id);
@@ -46,7 +45,7 @@ export const AlbumController = {
 
   getAllHome: async (req: Request, res: Response) => {
     const homeAlbums = await AlbumRepository.findAllHome();
-    let finalData: Object[] = [];
+    const finalData: unknown[] = [];
     await Promise.all(
       homeAlbums.map(async (album) => {
         const artist = await ArtistRepository.findById(album.artist_id);
@@ -58,7 +57,7 @@ export const AlbumController = {
 
   getMoreHome: async (req: Request, res: Response) => {
     const homeAlbums = await AlbumRepository.findMoreHome();
-    let finalData: Object[] = [];
+    const finalData: unknown[] = [];
     await Promise.all(
       homeAlbums.map(async (album) => {
         const artist = await ArtistRepository.findById(album.artist_id);
@@ -71,7 +70,7 @@ export const AlbumController = {
   getTop: async (req: Request, res: Response) => {
     const id = req.params.id;
     const homeAlbums = await AlbumRepository.findTop(id);
-    let finalData: Object[] = [];
+    const finalData: unknown[] = [];
     await Promise.all(
       homeAlbums.map(async (album) => {
         const artist = await ArtistRepository.findById(album.artist_id);
@@ -84,7 +83,7 @@ export const AlbumController = {
   search: async (req: Request, res: Response) => {
     const str = req.query.search as string;
     const results = await AlbumRepository.search(str);
-    let finalData: Object[] = [];
+    const finalData: unknown[] = [];
     await Promise.all(
       results.map(async (album) => {
         const artist = await ArtistRepository.findById(album.artist_id);
@@ -97,7 +96,7 @@ export const AlbumController = {
   getAlbumSongs: async (req: Request, res: Response) => {
     const id = req.params.id;
     const tracks = await TrackRepository.findAlbumSongs(id);
-    const newArr: Object[] = []
+    const newArr: unknown[] = []
     await Promise.all(tracks.map(async (track) => {
       const artist = await ArtistRepository.findById(track.artist_id!)
       const album = await AlbumRepository.findById(track.album_id!)

@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
 import { UserRepository } from "../repository/UserRepository";
-import { readdirSync } from "fs";
-
+//eslint-disable-next-line
 const bcrypt = require("bcrypt");
 
-const regExPassword =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+//eslint-disable-next-line
+const regExPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
 export const ResetPassword = {
   async reset(req: Request, res: Response) {

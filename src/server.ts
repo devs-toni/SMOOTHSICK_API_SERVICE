@@ -7,12 +7,19 @@ import { NextFunction, Request, Response } from "express";
 import CONFIGURATION, { ENV } from "./config/config";
 import { loggerStream } from "./config/logger/winston";
 import { UserRouter } from "./router/UserRouter";
+//eslint-disable-next-line
 const express = require("express");
+//eslint-disable-next-line
 const helmet = require("helmet");
+//eslint-disable-next-line
 const path = require("path");
+//eslint-disable-next-line
 const cors = require("cors");
+//eslint-disable-next-line
 const morgan = require("morgan");
+//eslint-disable-next-line
 const fileUpload = require("express-fileupload");
+//eslint-disable-next-line
 const { json } = require("body-parser");
 export const app = express();
 const { app: env_app } = CONFIGURATION;

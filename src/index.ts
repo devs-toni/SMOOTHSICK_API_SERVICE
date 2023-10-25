@@ -1,7 +1,6 @@
 import { connectDb } from "./db/connect";
 import CONFIGURATION from "./config/config";
 import { app } from "./server";
-import { logger } from "./config/logger/winston";
 
 const { app: env_app } = CONFIGURATION;
 

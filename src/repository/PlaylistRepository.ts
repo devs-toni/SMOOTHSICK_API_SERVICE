@@ -28,7 +28,7 @@ export const PlaylistRepository = {
     return undefined;
   },
 
-  addToPlaylist: async (userPlaylist: Object, trackId: string) => {
+  addToPlaylist: async (userPlaylist: object, trackId: string) => {
     const trackAdded = await PlaylistModel.updateOne(userPlaylist, {
       $push: { tracklist: trackId },
     });

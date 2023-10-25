@@ -1,27 +1,19 @@
-import axios from "axios";
 import { Request, Response } from "express";
-import { ArtistRepository } from "../repository/ArtistRepository";
-import { IArtist } from "../models/Artist";
-import { IAlbum } from "../models/Album";
-import { AlbumRepository } from "../repository/AlbumRepository";
-import { TrackRepository } from "../repository/TrackRepository";
-import { ITrack } from "../models/Track";
-import { IPlaylist } from "../models/Playlist";
-import { PlaylistModel } from "../repository/schemas/Playlist";
-import { PlaylistRepository } from "../repository/PlaylistRepository";
+//eslint-disable-next-line
 const data = require("../config/data.json");
 
 export const AdminController = {
   reload: async (req: Request, res: Response) => {
+    //eslint-disable-next-line    
     function sleep(milliseconds: number) {
-      var start = new Date().getTime();
-      for (var i = 0; i < 1e7; i++) {
+    const start = new Date().getTime();
+      for (let i = 0; i < 1e7; i++) {
         if (new Date().getTime() - start > milliseconds) {
           break;
         }
       }
     }
-    const { playlists, artists, albums } = data;
+    //const { playlists, artists, albums } = data;
 
 /*     const artistsDeleted = await ArtistRepository.deleteAll();
     const albumsDeleted = await AlbumRepository.deleteAll();

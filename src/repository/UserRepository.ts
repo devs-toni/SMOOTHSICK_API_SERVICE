@@ -1,4 +1,4 @@
-import { IUserLogin, IUserRegister, IUserRegisterGoogle } from "../models/User";
+import { IUserRegister, IUserRegisterGoogle } from "../models/User";
 import { UserModel } from "./schemas/User";
 import { UserGoogleModel } from "./schemas/UserGoogle";
 
@@ -31,7 +31,7 @@ export const UserRepository = {
     },
 
 
-    get: async (email: String) => {
+    get: async (email: string) => {
         try {
             const userFinded = await UserModel.findOne({ email });
             if (userFinded) return userFinded;
@@ -42,7 +42,7 @@ export const UserRepository = {
         }
     },
 
-    getById: async (id: String) => {
+    getById: async (id: string) => {
         try {
             const userFinded = await UserModel.findOne({ _id: id });
             if (userFinded) return userFinded;
@@ -53,7 +53,7 @@ export const UserRepository = {
         }
     },
 
-    googleGetById: async (id: String) => {
+    googleGetById: async (id: string) => {
         try {
             const userFinded = await UserGoogleModel.findOne({ _id: id });
             if (userFinded) return userFinded;
@@ -67,7 +67,7 @@ export const UserRepository = {
         return await UserModel.find({}, { email: 1, name: 1, last_name: 1 });
     },
 
-    FindByIdAndUpdate: async (id: String, pass: String) => {
+    FindByIdAndUpdate: async (id: string, pass: string) => {
         try {
             const updatedPass = await UserModel.findByIdAndUpdate({ _id: id }, { $set: { password: pass } })
             if (updatedPass) return updatedPass;
@@ -78,7 +78,7 @@ export const UserRepository = {
         }
     },
 
-    FindByIdAndUpdateUserName: async (id: String, userName: String) => {
+    FindByIdAndUpdateUserName: async (id: string, userName: string) => {
         try {
             const updateUserName = await UserModel.findByIdAndUpdate({ _id: id }, { $set: { user_name: userName } })
             if (updateUserName) return updateUserName;
@@ -89,7 +89,7 @@ export const UserRepository = {
         }
     },
 
-    FindByIdAndUpdateGoogleUserName: async (id: String, userName: String) => {
+    FindByIdAndUpdateGoogleUserName: async (id: string, userName: string) => {
         try {
             const updateUserName = await UserGoogleModel.findByIdAndUpdate({ _id: id }, { $set: { user_name: userName } })
             if (updateUserName) return updateUserName;
@@ -100,7 +100,7 @@ export const UserRepository = {
         }
     },
 
-    FindByIdAndUpdateEmail: async (id: String, email: String) => {
+    FindByIdAndUpdateEmail: async (id: string, email: string) => {
         try {
             const updateUserEmail = await UserModel.findByIdAndUpdate({ _id: id }, { $set: { email } })
             if (updateUserEmail) return updateUserEmail;
@@ -111,7 +111,7 @@ export const UserRepository = {
         }
     },
 
-    FindByIdAndDelete: async (id: String) => {
+    FindByIdAndDelete: async (id: string) => {
         try {
             const deletedUser = await UserModel.findByIdAndDelete({ _id: id })
             if (deletedUser) return deletedUser;
@@ -122,7 +122,7 @@ export const UserRepository = {
 
     },
 
-    FindByIdAndDeleteGoogle: async (id: String) => {
+    FindByIdAndDeleteGoogle: async (id: string) => {
         try {
             const deletedUser = await UserGoogleModel.findByIdAndDelete({ _id: id })
             if (deletedUser) return deletedUser;

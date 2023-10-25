@@ -19,8 +19,8 @@ jobs:
       - name: Install dependencies
         run: npm i
         
-      #- name: Linter
-      #  run: npm run lint
+      - name: Linter
+        run: npm run lint
 
       #- name: Types
       #  run: npm run check:types

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+//eslint-disable-next-line
 const jwt = require('jsonwebtoken')
 import { UserModel } from "../repository/schemas/User";
 import { UserGoogleModel } from "../repository/schemas/UserGoogle";

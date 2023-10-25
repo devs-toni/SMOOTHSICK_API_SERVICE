@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { ArtistController } from "../controller/ArtistController";
-import { logger } from "../config/logger/winston";
 
 export const ArtistRouter = Router();
 

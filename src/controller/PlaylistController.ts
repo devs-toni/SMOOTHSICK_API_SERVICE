@@ -1,10 +1,7 @@
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { PlaylistRepository } from "../repository/PlaylistRepository";
-import { IUserPlaylist } from "../models/Playlist";
 import { TrackRepository } from "../repository/TrackRepository";
 import { AlbumRepository } from "../repository/AlbumRepository";
-import { ITrack } from "../models/Track";
-import { type } from "os";
 
 export const PlaylistController = {
   createPlaylist: async (req: Request, res: Response) => {

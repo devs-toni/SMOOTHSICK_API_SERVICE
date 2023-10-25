@@ -4,15 +4,13 @@ import { AlbumRepository } from "../repository/AlbumRepository";
 import { ArtistRepository } from "../repository/ArtistRepository";
 import { ITrackDto, ITrack } from "../models/Track";
 import {
-  cloudinary,
   uploadAudioFile,
   uploadImage,
 } from "../cloudinary/cloudinary";
-import { PlaylistRepository } from "../repository/PlaylistRepository";
 
 interface MulterRequest extends Request {
   body: {
-    data: any;
+    data: unknown;
   };
   files: {
     audio: {
@@ -21,7 +19,7 @@ interface MulterRequest extends Request {
     };
     image: {
       name: string;
-      data: Object;
+      data: unknown;
       size: number;
       encoding: string;
       tempFilePath: string;
@@ -34,13 +32,14 @@ interface MulterRequest extends Request {
 }
 
 export const TrackController = {
-  save: async (req: MulterRequest, res: any) => {
+
+  save: async (req: MulterRequest, res: Response) => {
     const data = req.body.data as unknown as ITrack;
     const result = await TrackRepository.save(data);
     return res.send(result);
   },
 
-  uploadAudio: async (req: MulterRequest, res: any) => {
+  uploadAudio: async (req: MulterRequest, res: Response) => {
     const audioUploaded = await uploadAudioFile(
       req.files.audio.name,
       req.files.audio.tempFilePath
@@ -48,14 +47,14 @@ export const TrackController = {
       .then((res) => {
         return res;
       })
-      .catch((err) => {
+      .catch(() => {
         return undefined;
       });
     if (typeof audioUploaded === "undefined") return res.status(500).send();
     return res.send(audioUploaded);
   },
 
-  uploadImage: async (req: MulterRequest, res: any) => {
+  uploadImage: async (req: MulterRequest, res: Response) => {
     const imageUploaded = await uploadImage(req.files.image.tempFilePath);
     if (typeof imageUploaded === "undefined") return res.status(500).send();
     return res.send(imageUploaded);
@@ -97,8 +96,8 @@ export const TrackController = {
 
   getAllHome: async (req: Request, res: Response) => {
     const artists = await ArtistRepository.findAllHome();
-    let finalData: ITrackDto[] = [];
-    let finalTracks: ITrack[] = [];
+    const finalData: ITrackDto[] = [];
+    const finalTracks: ITrack[] = [];
 
     await Promise.all(
       artists.map(async (artist) => {
@@ -145,8 +144,8 @@ export const TrackController = {
 
   getMoreHome: async (req: Request, res: Response) => {
     const artists = await ArtistRepository.findMoreHome();
-    let finalData: ITrackDto[] = [];
-    let finalTracks: ITrack[] = [];
+    const finalData: ITrackDto[] = [];
+    const finalTracks: ITrack[] = [];
 
     await Promise.all(
       artists.map(async (artist) => {
@@ -198,7 +197,7 @@ export const TrackController = {
 
   getTop: async (req: Request, res: Response) => {
     const id = req.params.id;
-    let finalData: ITrackDto[] = [];
+    const finalData: ITrackDto[] = [];
     const tracks = await TrackRepository.findTopFour(id);
     await Promise.all(
       tracks.map(

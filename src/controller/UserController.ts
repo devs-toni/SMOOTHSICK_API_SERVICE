@@ -8,6 +8,7 @@ import { tokenGenerator } from "../helpers/tokenGenerator";
 import { ArtistRepository } from "../repository/ArtistRepository";
 import { ITrackDto } from "../models/Track";
 import { PlaylistRepository } from "../repository/PlaylistRepository";
+//eslint-disable-next-line
 const bcrypt = require("bcrypt");
 
 export const UserController = {

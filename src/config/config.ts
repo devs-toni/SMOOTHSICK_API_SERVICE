@@ -1,4 +1,5 @@
 import { env_parameters, env, Iconfig } from "./index";
+//eslint-disable-next-line
 require("dotenv").config();
 
 const { NODE_ENV, PORT, DB_URI, DB_URI_PROD, CLOUDINARY_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET } = process.env;

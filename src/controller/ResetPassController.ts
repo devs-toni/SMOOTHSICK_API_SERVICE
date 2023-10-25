@@ -3,8 +3,8 @@ import { UserRepository } from "../repository/UserRepository";
 //eslint-disable-next-line
 const bcrypt = require("bcrypt");
 
-//eslint-disable-next-line
 const regExPassword =
+  //eslint-disable-next-line
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
 export const ResetPassword = {

@@ -69,6 +69,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          dockerfile: Dockerfile
+          file: Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/smoothsick-api:${{ env.NEXT_RELEASE }}

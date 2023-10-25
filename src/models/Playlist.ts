@@ -1,4 +1,3 @@
-
 export interface IPlaylist {
   id: string;
   title: string;
@@ -7,12 +6,12 @@ export interface IPlaylist {
   nb_tracks: number;
   picture?: string;
   fans: number;
-  tracklist: string[],
+  tracklist: string[];
   creator_id: string;
 }
 
 export interface IUserPlaylist {
-  id: string
+  id: string;
   title: string;
   description?: string;
   picture: string;

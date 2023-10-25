@@ -30,20 +30,20 @@ app.use(
   cors({
     origin: [env_app.FRONT_URI],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  })
+  }),
 );
 app.use(
   morgan(
     ":method :url :status: :res[content-length]- :response-time ms - API Server",
-    { stream: loggerStream, skip: () => !ENV }
-  )
+    { stream: loggerStream, skip: () => !ENV },
+  ),
 );
 app.use(helmet());
 app.use((request: Request, response: Response, next: NextFunction) => {
   response.header("Access-Control-Allow-Origin", "*");
   response.header(
     "Access-Control-Allow-Headers",
-    "Authorization, X-API-KEY, Origin, X-Requested-With, Content-type, Accept, Access-Control-Allow-Request-Method"
+    "Authorization, X-API-KEY, Origin, X-Requested-With, Content-type, Accept, Access-Control-Allow-Request-Method",
   );
   next();
 });
@@ -53,7 +53,7 @@ app.use(
     tempFileDir: "./uploads",
     limits: { fileSize: 30000000 },
     abortOnLimit: true,
-  })
+  }),
 );
 app.use(json({ limit: "50mb" }));
 

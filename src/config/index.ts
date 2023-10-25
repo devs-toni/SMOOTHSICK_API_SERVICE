@@ -1,1 +1,1 @@
-export * from './Iconfig';
+export * from "./Iconfig";

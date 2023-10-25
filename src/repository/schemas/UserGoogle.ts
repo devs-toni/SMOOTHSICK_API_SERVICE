@@ -12,7 +12,7 @@ const UserGoogleSchema: Schema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export const UserGoogleModel = model("User_Google", UserGoogleSchema);

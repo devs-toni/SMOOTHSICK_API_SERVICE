@@ -15,7 +15,7 @@ const AlbumSchema: Schema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export const AlbumModel = model("Album", AlbumSchema);

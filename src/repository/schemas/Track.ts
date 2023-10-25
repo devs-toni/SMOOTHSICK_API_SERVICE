@@ -18,7 +18,7 @@ const TrackSchema: Schema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export const TrackModel = model<ITrack>("Track", TrackSchema);

@@ -10,7 +10,7 @@ const ArtistSchema: Schema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export const ArtistModel = model("Artist", ArtistSchema);

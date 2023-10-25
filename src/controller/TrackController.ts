@@ -3,10 +3,7 @@ import { TrackRepository } from "../repository/TrackRepository";
 import { AlbumRepository } from "../repository/AlbumRepository";
 import { ArtistRepository } from "../repository/ArtistRepository";
 import { ITrackDto, ITrack } from "../models/Track";
-import {
-  uploadAudioFile,
-  uploadImage,
-} from "../cloudinary/cloudinary";
+import { uploadAudioFile, uploadImage } from "../cloudinary/cloudinary";
 
 interface MulterRequest extends Request {
   body: {
@@ -42,7 +39,7 @@ export const TrackController = {
   uploadAudio: async (req: MulterRequest, res: any) => {
     const audioUploaded = await uploadAudioFile(
       req.files.audio.name,
-      req.files.audio.tempFilePath
+      req.files.audio.tempFilePath,
     )
       .then((res) => {
         return res;
@@ -82,7 +79,7 @@ export const TrackController = {
         album_id: track.album_id,
         album_cover: album[0]?.cover,
         artist_name: artist[0]?.name ? artist[0].name : "",
-        likes: track.likes
+        likes: track.likes,
       };
       return res.send(newTrack);
     }
@@ -103,7 +100,7 @@ export const TrackController = {
       artists.map(async (artist) => {
         const track = await TrackRepository.findBestSong(artist.id);
         if (typeof track[0] !== "undefined") finalTracks.push(track[0]);
-      })
+      }),
     );
 
     await Promise.all(
@@ -136,8 +133,8 @@ export const TrackController = {
               });
             }
           }
-        }
-      )
+        },
+      ),
     );
     return res.send(finalData);
   },
@@ -151,7 +148,7 @@ export const TrackController = {
       artists.map(async (artist) => {
         const track = await TrackRepository.findBestSong(artist.id);
         if (typeof track[0] !== "undefined") finalTracks.push(track[0]);
-      })
+      }),
     );
 
     await Promise.all(
@@ -184,8 +181,8 @@ export const TrackController = {
               });
             }
           }
-        }
-      )
+        },
+      ),
     );
     return res.send(finalData);
   },
@@ -229,8 +226,8 @@ export const TrackController = {
               });
             }
           }
-        }
-      )
+        },
+      ),
     );
     return res.send(finalData);
   },
@@ -304,8 +301,8 @@ export const TrackController = {
               });
             }
           }
-        }
-      )
+        },
+      ),
     );
     return res.send(finalData);
   },

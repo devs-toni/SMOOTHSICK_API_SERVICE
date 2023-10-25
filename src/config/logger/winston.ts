@@ -32,8 +32,8 @@ const consoleFormat = winston.format.combine(
   }),
   winston.format.timestamp({ format: "YYYY-MM-DD HH:mm" }),
   winston.format.printf(
-    (info) => `${info["timestamp"]} ${info.level}: ${info.message}`
-  )
+    (info) => `${info["timestamp"]} ${info.level}: ${info.message}`,
+  ),
 );
 
 const logFormat = winston.format.combine(
@@ -42,8 +42,8 @@ const logFormat = winston.format.combine(
   }),
   winston.format.timestamp({ format: "YYYY-MM-DD HH:mm" }),
   winston.format.printf(
-    (info) => `${info["timestamp"]} ${info.level}: ${info.message}`
-  )
+    (info) => `${info["timestamp"]} ${info.level}: ${info.message}`,
+  ),
 );
 
 const winstonLogger = winston.createLogger({

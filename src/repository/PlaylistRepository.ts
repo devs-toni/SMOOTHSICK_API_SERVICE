@@ -58,12 +58,12 @@ export const PlaylistRepository = {
     if (operation === "+") {
       return await PlaylistModel.updateOne(
         { id: playlistId },
-        { $push: { likes: userId } }
+        { $push: { likes: userId } },
       );
     } else if (operation === "-") {
       return await PlaylistModel.updateOne(
         { id: playlistId },
-        { $pull: { likes: userId } }
+        { $pull: { likes: userId } },
       );
     }
   },
@@ -75,7 +75,7 @@ export const PlaylistRepository = {
     try {
       const trackRemoved = await PlaylistModel.updateOne(
         { id: playlistId },
-        { $pull: { tracklist: trackId } }
+        { $pull: { tracklist: trackId } },
       );
       return trackRemoved;
     } catch (error) {

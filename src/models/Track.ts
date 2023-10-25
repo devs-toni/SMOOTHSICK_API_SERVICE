@@ -16,7 +16,7 @@ export interface ITrack {
   album_id?: string;
   artist?: IArtist;
   album?: IAlbum;
-  likes?: []
+  likes?: [];
 }
 export interface ITrackDto {
   id: string;
@@ -28,5 +28,5 @@ export interface ITrackDto {
   album_id?: string;
   album_cover: string;
   artist_name: string;
-  likes: [],
+  likes: [];
 }

@@ -29,7 +29,7 @@ export const PlaylistController = {
     if (userPlaylist) {
       const trackAdded = await PlaylistRepository.addToPlaylist(
         userPlaylist[0],
-        trackId
+        trackId,
       );
       if (trackAdded) {
         res.status(201).send(userPlaylist);
@@ -43,44 +43,42 @@ export const PlaylistController = {
     const playlistId = req.params.id;
     const playlist = await PlaylistRepository.findById(playlistId);
 
-    if (typeof playlist[0] === 'undefined') {
-      return res.status(204).send("Empty tracklist")
+    if (typeof playlist[0] === "undefined") {
+      return res.status(204).send("Empty tracklist");
     }
     const tracks = playlist[0].tracklist;
     let idTrackChoosed = "";
     await Promise.all(
       tracks.map(async (track: string) => {
         const tempTrack = await TrackRepository.findById(track);
-        if (tempTrack?.album_id && idTrackChoosed.length === 0) idTrackChoosed = track;
-      })
+        if (tempTrack?.album_id && idTrackChoosed.length === 0)
+          idTrackChoosed = track;
+      }),
     );
     const tempTrack = await TrackRepository.findById(idTrackChoosed);
     if (tempTrack?.album_id) {
       const album = await AlbumRepository.findById(tempTrack?.album_id);
       return res.send(album[0].cover);
-    }
-    else if (!tempTrack) {
+    } else if (!tempTrack) {
       return res.status(204).send();
     }
-    return res.status(404).send("Something went wrong")
+    return res.status(404).send("Something went wrong");
   },
 
   removeFromPlaylist: async (req: Request, res: Response) => {
     const { trackId, playlistId } = req.body;
     try {
-      const trackRemoved = await PlaylistRepository.removeFromPlaylist(playlistId, trackId);
+      const trackRemoved = await PlaylistRepository.removeFromPlaylist(
+        playlistId,
+        trackId,
+      );
       if (trackRemoved?.acknowledged) {
-        res.status(201).send('Removed successfully');
+        res.status(201).send("Removed successfully");
       }
     } catch (error) {
       res.status(404).send("Playlist not found");
     }
-
   },
-
-
-
-
 
   saveUserPlaylist: async (req: Request, res: Response) => {
     const { title, user_id, playlist_id } = req.body;
@@ -122,8 +120,9 @@ export const PlaylistController = {
           await Promise.all(
             tracks.map(async (track: string) => {
               const tempTrack = await TrackRepository.findById(track);
-              if (tempTrack?.album_id && idTrackChoosed.length === 0) idTrackChoosed = track;
-            })
+              if (tempTrack?.album_id && idTrackChoosed.length === 0)
+                idTrackChoosed = track;
+            }),
           );
           const tempTrack = await TrackRepository.findById(idTrackChoosed);
           if (tempTrack?.album_id) {
@@ -132,13 +131,10 @@ export const PlaylistController = {
             return playlist;
           }
         }
-      })
-    )
-
-
+      }),
+    );
 
     return res.send(homePlaylists);
-
   },
 
   toggleLike: async (req: Request, res: Response) => {

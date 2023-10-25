@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
 import { FormLogin, FormRegister, FormRegisterGoogle } from "../entity/User";
-import { IGetGoogleUserData, IGetUserData, IUserLogin, IUserRegister, IUserRegisterGoogle } from "../models/User";
+import {
+  IGetGoogleUserData,
+  IGetUserData,
+  IUserLogin,
+  IUserRegister,
+  IUserRegisterGoogle,
+} from "../models/User";
 import { UserRepository } from "../repository/UserRepository";
 import { TrackRepository } from "../repository/TrackRepository";
 import { AlbumRepository } from "../repository/AlbumRepository";
@@ -20,16 +26,18 @@ export const UserController = {
   async getPlaylists(req: Request, res: Response) {
     const userId = res.locals.user.id;
     const playlists = await PlaylistRepository.findByCreatorId(userId);
-    res.status(201).send(playlists)
+    res.status(201).send(playlists);
   },
 
   async deletePlaylist(req: Request, res: Response) {
     const playlistId = req.params.id;
     try {
-      const deletedPlaylist = await PlaylistRepository.FindByIdAndDelete(playlistId);
-      if (deletedPlaylist) return res.status(201).send("Playlist deleted successfully");
+      const deletedPlaylist =
+        await PlaylistRepository.FindByIdAndDelete(playlistId);
+      if (deletedPlaylist)
+        return res.status(201).send("Playlist deleted successfully");
     } catch (error) {
-      return res.status(500).send("Error deleting playlist")
+      return res.status(500).send("Error deleting playlist");
     }
   },
 
@@ -67,8 +75,8 @@ export const UserController = {
               });
             }
           }
-        }
-      )
+        },
+      ),
     );
     res.send(finalData);
   },
@@ -107,21 +115,19 @@ export const UserController = {
       picture: googleUser.profilePicture,
       type: "G-User",
       role: "U",
-    }
-    const currentUser = await UserRepository.get(user.email)
+    };
+    const currentUser = await UserRepository.get(user.email);
     if (typeof currentUser === "undefined") {
       const userGoogle = await UserRepository.saveGoogle(user);
       if (userGoogle) {
         const token = await tokenGenerator(userGoogle.id);
-        if (token) return res.status(201).send({ token, userGoogle })
+        if (token) return res.status(201).send({ token, userGoogle });
       } else {
         return res.status(500).send("Something went wrong");
       }
     } else {
-      return res.status(409).send("User already exists")
-
+      return res.status(409).send("User already exists");
     }
-
   },
 
   async authenticate(req: Request, res: Response) {
@@ -144,11 +150,9 @@ export const UserController = {
         if (result) return res.status(200).send({ token, currentUser });
         if (!result) return res.status(401).send("Incorrect login data");
         return res.status(500).send("Something went wrong");
-      }
+      },
     );
   },
-
-
 
   async authorizate(_req: Request, res: Response) {
     const user = res.locals.user;
@@ -161,7 +165,7 @@ export const UserController = {
 
   async getUserData(req: Request, res: Response) {
     const user = res.locals.user;
-    const { id } = user
+    const { id } = user;
     if (user.password === undefined) {
       const currentUser = await UserRepository.googleGetById(id);
 
@@ -174,7 +178,7 @@ export const UserController = {
         picture: currentUser?.picture,
         role: currentUser?.role,
         type: currentUser?.type,
-      }
+      };
       if (userToSend) return res.status(200).send(userToSend);
       return res.status(500).send("Something went wrong");
     } else {
@@ -190,8 +194,6 @@ export const UserController = {
       if (userToSend) return res.status(200).send(userToSend);
       return res.status(500).send("Something went wrong");
     }
-
-
   },
 
   async validatePass(req: Request, res: Response) {
@@ -206,7 +208,7 @@ export const UserController = {
           if (result) return res.status(201).send("Correct password");
           if (!result) return res.status(204).send("Incorrect password");
           return res.status(500).send("Something went wrong");
-        }
+        },
       );
     }
   },
@@ -214,29 +216,33 @@ export const UserController = {
   async changePass(req: Request, res: Response) {
     const { id, pass } = req.body;
     try {
-      const newPass = await bcrypt.hash(pass, 10)
-      const updatePass = await UserRepository.FindByIdAndUpdate(id, newPass)
-      if (updatePass) return res.status(201).send("Password updated successfully")
-      return res.status(204).send("Username does not exist")
-
+      const newPass = await bcrypt.hash(pass, 10);
+      const updatePass = await UserRepository.FindByIdAndUpdate(id, newPass);
+      if (updatePass)
+        return res.status(201).send("Password updated successfully");
+      return res.status(204).send("Username does not exist");
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal Server Error")
+      res.status(500).send("Internal Server Error");
     }
   },
-
 
   async changeUserName(req: Request, res: Response) {
     const { id, userName } = req.body;
 
     try {
-      const updateUserName = await UserRepository.FindByIdAndUpdateUserName(id, userName)
-      const updateGoodleUserName = await UserRepository.FindByIdAndUpdateGoogleUserName(id, userName)
-      if (updateUserName || updateGoodleUserName) return res.status(201).send("User name updated successfully")
-      return res.status(204).send("User does not exist")
+      const updateUserName = await UserRepository.FindByIdAndUpdateUserName(
+        id,
+        userName,
+      );
+      const updateGoodleUserName =
+        await UserRepository.FindByIdAndUpdateGoogleUserName(id, userName);
+      if (updateUserName || updateGoodleUserName)
+        return res.status(201).send("User name updated successfully");
+      return res.status(204).send("User does not exist");
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal Server Error")
+      res.status(500).send("Internal Server Error");
     }
   },
 
@@ -246,8 +252,12 @@ export const UserController = {
       const currentUser = await UserRepository.get(userEmail);
       if (currentUser) return res.status(204).send("Email already exists");
       if (!currentUser) {
-        const updateUserEmail = await UserRepository.FindByIdAndUpdateEmail(id, userEmail)
-        if (updateUserEmail) return res.status(201).send("User email updated successfully")
+        const updateUserEmail = await UserRepository.FindByIdAndUpdateEmail(
+          id,
+          userEmail,
+        );
+        if (updateUserEmail)
+          return res.status(201).send("User email updated successfully");
       }
     } catch (error) {
       console.error(error);
@@ -255,17 +265,17 @@ export const UserController = {
     }
   },
 
-
   async deleteUser(req: Request, res: Response) {
     const { id } = req.params;
     try {
       const userDeleted = await UserRepository.FindByIdAndDelete(id);
-      const userGoogleDeleted = await UserRepository.FindByIdAndDeleteGoogle(id);
-      if (userDeleted || userGoogleDeleted) return res.status(201).send("User deleted successfully")
-      return res.status(204).send("User does not exist")
+      const userGoogleDeleted =
+        await UserRepository.FindByIdAndDeleteGoogle(id);
+      if (userDeleted || userGoogleDeleted)
+        return res.status(201).send("User deleted successfully");
+      return res.status(204).send("User does not exist");
     } catch (error) {
       console.error(error);
     }
-  }
-
+  },
 };

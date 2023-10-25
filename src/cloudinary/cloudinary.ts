@@ -1,4 +1,4 @@
-import cloudinaryLibrary = require("cloudinary")
+import cloudinaryLibrary = require("cloudinary");
 export const cloudinary = cloudinaryLibrary.v2;
 import CONFIGURATION from "../config/config";
 

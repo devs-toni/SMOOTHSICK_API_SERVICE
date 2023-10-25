@@ -13,7 +13,7 @@ const UserSchema: Schema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export const UserModel = model("User", UserSchema);

@@ -4,9 +4,9 @@ const data = require("../config/data.json");
 
 export const AdminController = {
   reload: async (req: Request, res: Response) => {
-    //eslint-disable-next-line    
+    //eslint-disable-next-line
     function sleep(milliseconds: number) {
-    const start = new Date().getTime();
+      const start = new Date().getTime();
       for (let i = 0; i < 1e7; i++) {
         if (new Date().getTime() - start > milliseconds) {
           break;
@@ -15,7 +15,7 @@ export const AdminController = {
     }
     //const { playlists, artists, albums } = data;
 
-/*     const artistsDeleted = await ArtistRepository.deleteAll();
+    /*     const artistsDeleted = await ArtistRepository.deleteAll();
     const albumsDeleted = await AlbumRepository.deleteAll();
     const tracksDeleted = await TrackRepository.deleteAll();
     const playlistsDeleted = await PlaylistRepository.deleteAll();
@@ -124,7 +124,7 @@ export const AdminController = {
             });
         })
       ); */
-      res.redirect("http://localhost:5173/account");
+    res.redirect("http://localhost:5173/account");
     //}
   },
 };

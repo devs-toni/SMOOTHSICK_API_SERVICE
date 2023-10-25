@@ -1,7 +1,6 @@
 import { ITrack } from "../models/Track";
 import { TrackModel } from "./schemas/Track";
 
-
 export const TrackRepository = {
   save: async (track: ITrack) => {
     const trackExist = await TrackModel.findOne({ title: track.title });
@@ -11,7 +10,7 @@ export const TrackRepository = {
   },
 
   findById: async (trackId: string) =>
-  await TrackModel.findOne({ id: trackId }),
+    await TrackModel.findOne({ id: trackId }),
 
   findAll: async () => await TrackModel.find({ disk_number: { $ne: -1 } }),
 
@@ -21,8 +20,7 @@ export const TrackRepository = {
       disk_number: { $ne: -1 },
     }).limit(4),
 
-  findOwner: async () =>
-    await TrackModel.find({ disk_number: -1 }).limit(50),
+  findOwner: async () => await TrackModel.find({ disk_number: -1 }).limit(50),
 
   findBestSong: async (artistId: string) =>
     await TrackModel.find({ artist_id: artistId, disk_number: { $ne: -1 } })
@@ -49,12 +47,12 @@ export const TrackRepository = {
     if (operation === "+") {
       return await TrackModel.updateOne(
         { id: trackId },
-        { $push: { likes: userId } }
+        { $push: { likes: userId } },
       );
     } else if (operation === "-") {
       return await TrackModel.updateOne(
         { id: trackId },
-        { $pull: { likes: userId } }
+        { $pull: { likes: userId } },
       );
     }
   },
@@ -62,7 +60,7 @@ export const TrackRepository = {
   updateById: async (trackId: string, track: ITrack) => {
     return await TrackModel.updateOne(
       { id: trackId },
-      { $set: { title: track.title, title_short: track.title_short } }
+      { $set: { title: track.title, title_short: track.title_short } },
     );
   },
 

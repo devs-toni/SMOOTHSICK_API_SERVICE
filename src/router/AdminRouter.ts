@@ -3,4 +3,4 @@ import { Router } from "express";
 
 export const AdminRouter = Router();
 
-AdminRouter.get('/reload', AdminController.reload);
+AdminRouter.get("/reload", AdminController.reload);

@@ -32,14 +32,14 @@ interface MulterRequest extends Request {
 }
 
 export const TrackController = {
-
-  save: async (req: MulterRequest, res: Response) => {
+  //eslint-disable-next-line
+  save: async (req: MulterRequest, res: any) => {
     const data = req.body.data as unknown as ITrack;
     const result = await TrackRepository.save(data);
     return res.send(result);
   },
-
-  uploadAudio: async (req: MulterRequest, res: Response) => {
+  //eslint-disable-next-line
+  uploadAudio: async (req: MulterRequest, res: any) => {
     const audioUploaded = await uploadAudioFile(
       req.files.audio.name,
       req.files.audio.tempFilePath
@@ -53,8 +53,8 @@ export const TrackController = {
     if (typeof audioUploaded === "undefined") return res.status(500).send();
     return res.send(audioUploaded);
   },
-
-  uploadImage: async (req: MulterRequest, res: Response) => {
+  //eslint-disable-next-line
+  uploadImage: async (req: MulterRequest, res: any) => {
     const imageUploaded = await uploadImage(req.files.image.tempFilePath);
     if (typeof imageUploaded === "undefined") return res.status(500).send();
     return res.send(imageUploaded);

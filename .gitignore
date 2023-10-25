@@ -1,5 +1,4 @@
 node_modules
-package-lock.json
 .env.development
 error.log
 all.log

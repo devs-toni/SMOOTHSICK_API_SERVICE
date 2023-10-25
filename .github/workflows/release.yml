@@ -71,4 +71,4 @@ jobs:
           context: .
           dockerfile: Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/smoothsick-front:${{ env.NEXT_RELEASE }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/smoothsick-api:${{ env.NEXT_RELEASE }}

@@ -11,7 +11,7 @@
     "build": "tsc --build",
     "clean": "tsc --build --clean",
     "lint:format": "prettier --cache --check .",
-    "types": "tsc --noemit"
+    "check:types": "tsc --noemit"
   },
   "author": "",
   "license": "ISC",

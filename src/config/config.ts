@@ -6,7 +6,6 @@ const {
   NODE_ENV,
   PORT,
   DB_URI,
-  DB_URI_PROD,
   CLOUDINARY_NAME,
   CLOUDINARY_KEY,
   CLOUDINARY_SECRET,
@@ -35,7 +34,7 @@ class CONFIGURATION implements Iconfig {
       FRONT_URI: "https://smoothsick.arcprojects.es",
     },
     db: {
-      DB_URI: DB_URI_PROD as string,
+      DB_URI: DB_URI as string,
     },
     cloudinary: {
       NAME: CLOUDINARY_NAME as string,

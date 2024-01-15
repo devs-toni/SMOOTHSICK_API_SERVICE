@@ -9,6 +9,7 @@ const {
   CLOUDINARY_NAME,
   CLOUDINARY_KEY,
   CLOUDINARY_SECRET,
+  FRONT_URI
 } = process.env;
 
 export const ENV: env = (NODE_ENV as env) || "development";
@@ -17,7 +18,7 @@ class CONFIGURATION implements Iconfig {
   development: env_parameters = {
     app: {
       PORT: (PORT as unknown as number) || 4000,
-      FRONT_URI: "http://localhost:5173",
+      FRONT_URI: FRONT_URI as string,
     },
     db: {
       DB_URI: DB_URI as string,
@@ -31,7 +32,7 @@ class CONFIGURATION implements Iconfig {
   production: env_parameters = {
     app: {
       PORT: (PORT as unknown as number) || 4000,
-      FRONT_URI: "https://smoothsick.arcprojects.es",
+      FRONT_URI: FRONT_URI as string,
     },
     db: {
       DB_URI: DB_URI as string,

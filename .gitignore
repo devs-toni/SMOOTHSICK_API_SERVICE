@@ -1,6 +1,9 @@
 node_modules
 .env.development
+.env
 error.log
 all.log
 src/db/mongo_key.pem
 uploads/*
+src/.mongo/*
+src/db/migrations/*

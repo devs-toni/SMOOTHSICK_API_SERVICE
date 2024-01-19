@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const ArtistSchema: Schema = new Schema(
   {
-    id: { type: String },
+    Id: { type: String, required: true },
     name: { type: String, required: true },
     picture: { type: String, required: true },
     nb_album: { type: Number, required: true },

@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const AlbumSchema: Schema = new Schema(
   {
-    id: { type: String },
+    Id: { type: String, required: true },
     title: { type: String, required: true },
     label: { type: String, required: true },
     upc: { type: String, required: true },

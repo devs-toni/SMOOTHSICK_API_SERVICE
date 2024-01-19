@@ -6,4 +6,3 @@ all.log
 src/db/mongo_key.pem
 uploads/*
 src/.mongo/*
-src/db/migrations/*

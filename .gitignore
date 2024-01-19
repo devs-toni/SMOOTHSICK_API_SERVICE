@@ -6,3 +6,5 @@ all.log
 src/db/mongo_key.pem
 uploads/*
 src/.mongo/*
+src/db/migrations/smoothsick.users.json
+src/db/migrations/smoothsick.users_google.json

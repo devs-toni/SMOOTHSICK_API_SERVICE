@@ -42,6 +42,7 @@ const loadData = (entity: string) => {
             return
           })
         })
+        break;
       case "users":
         datos.forEach((element: IGetUserData) => {
           UserModel.insertMany([element]).catch(() => {

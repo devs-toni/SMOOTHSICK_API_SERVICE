@@ -1,4 +1,5 @@
 import fs from "fs"
+import config from "../config/config";
 import { AlbumModel } from "../repository/schemas/Album";
 import { ArtistModel } from "../repository/schemas/Artist";
 import { PlaylistModel } from "../repository/schemas/Playlist";
@@ -12,7 +13,7 @@ import { IAlbum } from "../models/Album";
 import { ITrack } from "../models/Track";
 
 const loadData = (entity: string) => {
-    const datos = JSON.parse(fs.readFileSync('src/db/migrations/smoothsick.' + entity + '.json', 'utf-8'));
+    const datos = JSON.parse(fs.readFileSync(config.app.MIGRATIONS_URI + '.' + entity + '.json', 'utf-8'));
 
     switch (entity) {
       case "albums":

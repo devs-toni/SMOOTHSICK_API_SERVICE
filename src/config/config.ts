@@ -9,7 +9,8 @@ const {
   CLOUDINARY_NAME,
   CLOUDINARY_KEY,
   CLOUDINARY_SECRET,
-  FRONT_URI
+  FRONT_URI,
+  MIGRATIONS_URI
 } = process.env;
 
 export const ENV: env = (NODE_ENV as env) || "development";
@@ -19,6 +20,7 @@ class CONFIGURATION implements Iconfig {
     app: {
       PORT: (PORT as unknown as number) || 4000,
       FRONT_URI: FRONT_URI as string,
+      MIGRATIONS_URI: MIGRATIONS_URI as string
     },
     db: {
       DB_URI: DB_URI as string,
@@ -33,6 +35,7 @@ class CONFIGURATION implements Iconfig {
     app: {
       PORT: (PORT as unknown as number) || 4000,
       FRONT_URI: FRONT_URI as string,
+      MIGRATIONS_URI: MIGRATIONS_URI as string
     },
     db: {
       DB_URI: DB_URI as string,

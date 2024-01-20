@@ -4,6 +4,7 @@ export interface env_parameters {
   app: {
     PORT: number;
     FRONT_URI: string;
+    MIGRATIONS_URI: string;
   };
   db: {
     DB_URI: string;

@@ -66,8 +66,8 @@ export const loadDatabase = () => {
   loadData("artists")
   loadData("playlists")
   loadData("tracks")
-  loadData("users")
-  loadData("users_google")
+  //loadData("users")
+  //loadData("users_google")
 }
 
 

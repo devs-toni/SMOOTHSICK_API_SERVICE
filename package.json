@@ -1,6 +1,6 @@
 {
   "name": "apollofy-backend",
-  "version": "0.0.7-SNAPSHOT.0",
+  "version": "0.0.8-SNAPSHOT.0",
   "description": "",
   "main": "index.js",
   "scripts": {

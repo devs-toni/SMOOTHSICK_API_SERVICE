@@ -3,7 +3,7 @@ import { AlbumModel } from "./schemas/Album";
 
 export const AlbumRepository = {
   save: async (album: IAlbum) => {
-    const albumExists = await AlbumModel.findOne({ id: album.id });
+    const albumExists = await AlbumModel.findOne({ Id: album.id });
     if (!albumExists) {
       return await AlbumModel.create(album);
     }
@@ -12,7 +12,7 @@ export const AlbumRepository = {
   findTop: async (artistId: string) =>
     await AlbumModel.find({ artist_id: artistId }).sort({ fans: -1 }).limit(10),
 
-  findById: async (id: string) => await AlbumModel.find({ id: id }),
+  findById: async (id: string) => await AlbumModel.find({ Id: id }),
 
   findAll: async () => await AlbumModel.find({}).sort({ title: 1 }),
 

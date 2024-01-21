@@ -38,6 +38,9 @@ export const AlbumController = {
     await Promise.all(
       allAlbums.map(async (album) => {
         const artist = await ArtistRepository.findById(album.artist_id);
+        console.log(album.artist_id);
+        console.log(artist);
+                
         artist.length > 0 && finalData.push({ album, artist: artist[0] });
       }),
     );

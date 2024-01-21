@@ -10,7 +10,7 @@ export const TrackRepository = {
   },
 
   findById: async (trackId: string) =>
-    await TrackModel.findOne({ id: trackId }),
+    await TrackModel.findOne({ Id: trackId }),
 
   findAll: async () => await TrackModel.find({ disk_number: { $ne: -1 } }),
 
@@ -29,7 +29,7 @@ export const TrackRepository = {
 
   findLikeById: async (playlistId: string, userId: string) =>
     await TrackModel.find({
-      id: playlistId,
+      Id: playlistId,
       likes: userId,
       disk_number: { $ne: -1 },
     }),
@@ -46,12 +46,12 @@ export const TrackRepository = {
   toggleLike: async (trackId: string, userId: string, operation: string) => {
     if (operation === "+") {
       return await TrackModel.updateOne(
-        { id: trackId },
+        { Id: trackId },
         { $push: { likes: userId } },
       );
     } else if (operation === "-") {
       return await TrackModel.updateOne(
-        { id: trackId },
+        { Id: trackId },
         { $pull: { likes: userId } },
       );
     }
@@ -59,13 +59,13 @@ export const TrackRepository = {
 
   updateById: async (trackId: string, track: ITrack) => {
     return await TrackModel.updateOne(
-      { id: trackId },
+      { Id: trackId },
       { $set: { title: track.title, title_short: track.title_short } },
     );
   },
 
   deleteById: async (trackId: string) =>
-    await TrackModel.deleteOne({ id: trackId }),
+    await TrackModel.deleteOne({ Id: trackId }),
 
   search: async (query: string) =>
     await TrackModel.find({

@@ -3,7 +3,7 @@ import { PlaylistModel } from "./schemas/Playlist";
 
 export const PlaylistRepository = {
   save: async (playlist: IPlaylist) => {
-    const playlistExists = await PlaylistModel.findOne({ id: playlist.id });
+    const playlistExists = await PlaylistModel.findOne({ Id: playlist.id });
     if (!playlistExists) {
       return await PlaylistModel.create(playlist);
     }
@@ -23,7 +23,7 @@ export const PlaylistRepository = {
   },
 
   FindByIdAndDelete: async (id: string) => {
-    const deletePlaylist = await PlaylistModel.deleteOne({ id });
+    const deletePlaylist = await PlaylistModel.deleteOne({ Id: id });
     if (deletePlaylist) return deletePlaylist;
     return undefined;
   },
@@ -38,7 +38,7 @@ export const PlaylistRepository = {
 
   findOne: async (id: string) => await PlaylistModel.find({ tracklist: id }),
 
-  findById: async (id: string) => await PlaylistModel.find({ id: id }),
+  findById: async (id: string) => await PlaylistModel.find({ Id: id }),
 
   findByCreatorId: async (id: string) =>
     await PlaylistModel.find({ creator_id: id }),
@@ -52,17 +52,17 @@ export const PlaylistRepository = {
     await PlaylistModel.find({}).sort({ fans: 1 }).limit(50),
 
   findLikeById: async (playlistId: string, userId: string) =>
-    await PlaylistModel.find({ id: playlistId, likes: userId }),
+    await PlaylistModel.find({ Id: playlistId, likes: userId }),
 
   toggleLike: async (playlistId: string, userId: string, operation: string) => {
     if (operation === "+") {
       return await PlaylistModel.updateOne(
-        { id: playlistId },
+        { Id: playlistId },
         { $push: { likes: userId } },
       );
     } else if (operation === "-") {
       return await PlaylistModel.updateOne(
-        { id: playlistId },
+        { Id: playlistId },
         { $pull: { likes: userId } },
       );
     }
@@ -74,7 +74,7 @@ export const PlaylistRepository = {
   removeFromPlaylist: async (playlistId: string, trackId: string) => {
     try {
       const trackRemoved = await PlaylistModel.updateOne(
-        { id: playlistId },
+        { Id: playlistId },
         { $pull: { tracklist: trackId } },
       );
       return trackRemoved;

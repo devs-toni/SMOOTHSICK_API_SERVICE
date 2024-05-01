@@ -3,6 +3,7 @@ import { ITrack } from "../../models/Track";
 
 const TrackSchema: Schema = new Schema(
   {
+    _id: { type: String, required: true },
     Id: { type: String, required: true },
     readable: { type: Boolean, required: true },
     title: { type: String, required: true },

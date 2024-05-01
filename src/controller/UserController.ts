@@ -48,7 +48,8 @@ export const UserController = {
     await Promise.all(
       tracks.map(
         async ({
-          id,
+          _id,
+          Id,
           title,
           duration,
           rank,
@@ -62,7 +63,8 @@ export const UserController = {
             const artist = await ArtistRepository.findById(artist_id!);
             if (album.length !== 0) {
               finalData.push({
-                id,
+                id: _id,
+                Id,
                 title,
                 duration,
                 rank,
@@ -138,7 +140,7 @@ export const UserController = {
       password: userData.password,
       id: userData.id,
     };
-    const currentUser = await UserRepository.get(user.email);
+    const currentUser = await UserRepository.get(user.email);    
     if (typeof currentUser === "undefined")
       return res.status(401).send("Incorrect login data");
     const token = await tokenGenerator(currentUser.id);

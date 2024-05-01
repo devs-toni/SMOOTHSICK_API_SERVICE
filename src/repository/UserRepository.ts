@@ -36,6 +36,7 @@ export const UserRepository = {
   get: async (email: string) => {
     try {
       const userFinded = await UserModel.findOne({ email });
+      
       if (userFinded) return userFinded;
       else return undefined;
     } catch (err) {

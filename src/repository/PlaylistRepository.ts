@@ -3,7 +3,7 @@ import { PlaylistModel } from "./schemas/Playlist";
 
 export const PlaylistRepository = {
   save: async (playlist: IPlaylist) => {
-    const playlistExists = await PlaylistModel.findOne({ Id: playlist.id });
+    const playlistExists = await PlaylistModel.findOne({ Id: playlist.Id });
     if (!playlistExists) {
       return await PlaylistModel.create(playlist);
     }

@@ -1,5 +1,6 @@
 export interface IArtist {
-  id: string;
+  _id: string;
+  Id: string;
   name: string;
   picture: string;
   nb_album: number;

@@ -3,7 +3,7 @@ import { AlbumModel } from "./schemas/Album";
 
 export const AlbumRepository = {
   save: async (album: IAlbum) => {
-    const albumExists = await AlbumModel.findOne({ Id: album.id });
+    const albumExists = await AlbumModel.findOne({ Id: album.Id });
     if (!albumExists) {
       return await AlbumModel.create(album);
     }

@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   mongodb:
-    container_name: mongodb
+    container_name: smoothsick-mongodb
     image: mongo:6-jammy
     restart: always
     environment:

@@ -3,7 +3,7 @@ import { ArtistModel } from "./schemas/Artist";
 
 export const ArtistRepository = {
   save: async (artist: IArtist) => {
-    const artistExist = await ArtistModel.findOne({ Id: artist.id });
+    const artistExist = await ArtistModel.findOne({ Id: artist.Id });
     if (!artistExist) {
       return await ArtistModel.create(artist);
     }

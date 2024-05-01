@@ -2,7 +2,8 @@ import { IAlbum } from "./Album";
 import { IArtist } from "./Artist";
 
 export interface ITrack {
-  id: string;
+  _id: string;
+  Id: string;
   readable: boolean;
   title: string;
   title_short: string;
@@ -20,6 +21,7 @@ export interface ITrack {
 }
 export interface ITrackDto {
   id: string;
+  Id: string;
   title: string;
   duration: number;
   rank: number;

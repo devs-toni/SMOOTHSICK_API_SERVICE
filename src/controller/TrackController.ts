@@ -72,6 +72,7 @@ export const TrackController = {
       const artist = await ArtistRepository.findById(track?.artist_id);
       const newTrack = {
         id: track.id,
+        Id: track.Id,
         title: track.title,
         duration: track.duration,
         rank: track.rank,
@@ -98,7 +99,7 @@ export const TrackController = {
 
     await Promise.all(
       artists.map(async (artist) => {
-        const track = await TrackRepository.findBestSong(artist.id);
+        const track = await TrackRepository.findBestSong(artist.Id);
         if (typeof track[0] !== "undefined") finalTracks.push(track[0]);
       }),
     );
@@ -106,7 +107,8 @@ export const TrackController = {
     await Promise.all(
       finalTracks.map(
         async ({
-          id,
+          _id,
+          Id, 
           title,
           duration,
           rank,
@@ -120,7 +122,8 @@ export const TrackController = {
             const artist = await ArtistRepository.findById(artist_id!);
             if (album.length !== 0) {
               finalData.push({
-                id,
+                id: _id,
+                Id,
                 title,
                 duration,
                 rank,
@@ -141,12 +144,14 @@ export const TrackController = {
 
   getMoreHome: async (req: Request, res: Response) => {
     const artists = await ArtistRepository.findMoreHome();
+    
     const finalData: ITrackDto[] = [];
     const finalTracks: ITrack[] = [];
 
     await Promise.all(
-      artists.map(async (artist) => {
-        const track = await TrackRepository.findBestSong(artist.id);
+      artists.map(async (artist) => {      
+        const track = await TrackRepository.findBestSong(artist.Id);
+        
         if (typeof track[0] !== "undefined") finalTracks.push(track[0]);
       }),
     );
@@ -154,7 +159,8 @@ export const TrackController = {
     await Promise.all(
       finalTracks.map(
         async ({
-          id,
+          _id,
+          Id,
           title,
           duration,
           rank,
@@ -168,7 +174,8 @@ export const TrackController = {
             const artist = await ArtistRepository.findById(artist_id!);
             if (album.length !== 0) {
               finalData.push({
-                id,
+                id: _id,
+                Id,
                 title,
                 duration,
                 rank,
@@ -183,7 +190,7 @@ export const TrackController = {
           }
         },
       ),
-    );
+    );    
     return res.send(finalData);
   },
 
@@ -199,7 +206,8 @@ export const TrackController = {
     await Promise.all(
       tracks.map(
         async ({
-          id,
+          _id,
+          Id,
           title,
           duration,
           rank,
@@ -213,7 +221,8 @@ export const TrackController = {
             const artist = await ArtistRepository.findById(artist_id!);
             if (album.length !== 0) {
               finalData.push({
-                id,
+                id: _id,
+                Id,
                 title,
                 duration,
                 rank,
@@ -274,7 +283,8 @@ export const TrackController = {
     await Promise.all(
       results.map(
         async ({
-          id,
+          _id,
+          Id,
           title,
           duration,
           rank,
@@ -288,7 +298,8 @@ export const TrackController = {
             const artist = await ArtistRepository.findById(artist_id!);
             if (album.length !== 0 && artist.length !== 0) {
               finalData.push({
-                id,
+                id: _id,
+                Id,
                 title,
                 duration,
                 rank,

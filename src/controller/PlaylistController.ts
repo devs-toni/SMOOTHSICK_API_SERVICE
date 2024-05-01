@@ -83,7 +83,8 @@ export const PlaylistController = {
   saveUserPlaylist: async (req: Request, res: Response) => {
     const { title, user_id, playlist_id } = req.body;
     const playlist = {
-      id: playlist_id,
+      id: undefined,
+      Id: playlist_id,
       title: title,
       description: "",
       duration: 300,
@@ -106,7 +107,7 @@ export const PlaylistController = {
   },
 
   getAllHome: async (req: Request, res: Response) => {
-    const homePlaylists = await PlaylistRepository.findAllHome();
+    const homePlaylists = await PlaylistRepository.findAllHome();    
     return res.send(homePlaylists);
   },
 

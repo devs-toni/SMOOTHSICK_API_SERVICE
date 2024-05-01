@@ -14,7 +14,7 @@ export const ArtistController = {
   },
 
   getAllHome: async (req: Request, res: Response) => {
-    const homeArtists = await ArtistRepository.findAllHome();
+    const homeArtists = await ArtistRepository.findAllHome();    
     return res.send(homeArtists);
   },
 

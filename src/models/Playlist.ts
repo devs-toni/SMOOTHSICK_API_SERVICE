@@ -1,5 +1,6 @@
 export interface IPlaylist {
-  id: string;
+  _id?: string;
+  Id: string;
   title: string;
   description?: string;
   duration: number;
@@ -12,6 +13,7 @@ export interface IPlaylist {
 
 export interface IUserPlaylist {
   id: string;
+  Id: string;
   title: string;
   description?: string;
   picture: string;

@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 
 const PlaylistSchema: Schema = new Schema(
   {
+    _id: { type: String, required: true },
     Id: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, required: false },

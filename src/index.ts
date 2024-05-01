@@ -6,10 +6,10 @@ import { loadDatabase } from "./db/loader";
 const { app: env_app } = CONFIGURATION;
 
 connectDb()
-  .then(() => {     
+  .then(async () => {     
     console.log("--- Database connected in host " + CONFIGURATION.db.DB_URI + " ---");
     console.log("--- Loading data in database .  .  . ---");
-    loadDatabase()
+    await loadDatabase()
     console.log("--- Database loaded successfully. ---");
     
     app.listen(env_app.PORT, () => {

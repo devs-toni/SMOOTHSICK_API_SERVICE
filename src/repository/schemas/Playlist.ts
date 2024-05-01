@@ -1,8 +1,8 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 
 const PlaylistSchema: Schema = new Schema(
   {
-    _id: { type: String, required: true },
+    _id: { type: Types.ObjectId, required: false },
     Id: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, required: false },

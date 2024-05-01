@@ -1,5 +1,7 @@
+import mongoose from "mongoose";
+
 export interface IPlaylist {
-  _id?: string;
+  _id?: mongoose.Types.ObjectId;
   Id: string;
   title: string;
   description?: string;

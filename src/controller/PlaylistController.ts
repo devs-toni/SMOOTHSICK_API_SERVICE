@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 import { PlaylistRepository } from "../repository/PlaylistRepository";
 import { TrackRepository } from "../repository/TrackRepository";
 import { AlbumRepository } from "../repository/AlbumRepository";
@@ -83,7 +84,7 @@ export const PlaylistController = {
   saveUserPlaylist: async (req: Request, res: Response) => {
     const { title, user_id, playlist_id } = req.body;
     const playlist = {
-      id: undefined,
+      _id: new mongoose.Types.ObjectId(),
       Id: playlist_id,
       title: title,
       description: "",

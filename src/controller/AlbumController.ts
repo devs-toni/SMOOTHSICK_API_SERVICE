@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { AlbumRepository } from "../repository/AlbumRepository";
 import { ArtistRepository } from "../repository/ArtistRepository";
 import { TrackRepository } from "../repository/TrackRepository";
-import { IAlbum, IAlbumDto } from "../models/Album";
+import { IAlbumDto } from "../models/Album";
 
 export const AlbumController = {
   getById: async (req: Request, res: Response) => {

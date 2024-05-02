@@ -9784,32 +9784,4 @@
   "createdAt": "2023-05-03T09:35:31.865Z",
   "updatedAt": "2023-05-03T09:35:31.865Z",
   "__v": 0
-},
-{
-  "_id": "64e331b00efc9227e404c955",
-  "Id": "49a869bf-377b-41a2-b3de-ba32c6d407c0",
-  "title": "dasdas",
-  "description": "",
-  "duration": 300,
-  "nb_tracks": 10,
-  "fans": 0,
-  "tracklist": [],
-  "creator_id": "-1",
-  "createdAt": "2023-08-21T09:43:12.979Z",
-  "updatedAt": "2023-08-21T09:43:12.979Z",
-  "__v": 0
-},
-{
-  "_id": "64e331bc0efc9227e404c95b",
-  "Id": "aec8b21b-80c6-4e5e-8b22-8759bd6f3cc2",
-  "title": "fgfggasdad",
-  "description": "",
-  "duration": 300,
-  "nb_tracks": 10,
-  "fans": 0,
-  "tracklist": [],
-  "creator_id": "-1",
-  "createdAt": "2023-08-21T09:43:24.496Z",
-  "updatedAt": "2023-08-21T09:43:24.496Z",
-  "__v": 0
 }]

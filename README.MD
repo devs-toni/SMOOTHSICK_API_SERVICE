@@ -50,3 +50,38 @@ You can visit this page through this link ✈️ <a>https://smoothsick.arcprojec
 
 <br />
 (●'◡'●) (●'◡'●) (●'◡'●)
+
+## Convenciones del Repositorio
+El modo de desarrollo de este proyecto sigue las siguientes convenciones:
+
+Crear rama con la siguiente nomenclatura:
+- `feat/add-branch-name`
+- `refactor/add-branch-name`
+- `test/add-branch-name`
+- `chore/add-branch-name`
+
+Los commits seguirán la siguiente convención:
+- `feat: this is my commit`
+- `internal: commit`
+- `chore: commit`
+
+> [!TIP]
+> **Flujo:** Una vez terminada la rama, abrir Pull Request (se recomienda en modo borrador) para verificar la build mediante un workflow automático de GitHub Actions. Tras el merge exitoso, se recomienda eliminar la rama de trabajo.
+
+---
+
+## Generar Versión
+En caso de estar listo para sacar una nueva versión:
+1. Desplazarse a **GitHub Actions - Release**.
+2. Iniciar el proceso seleccionando **Run Workflow**.
+
+Este proceso generará una nueva versión en el proyecto, subirá la imagen actualizada al repositorio de **Docker Hub** y creará una release oficial en GitHub.
+
+---
+
+## Infrastructura y Despliegue
+
+* **📦 GitOps Repository:** [🚀 `stack/smoothsick`](https://github.com/devs-toni/Infrastructure-gitops/tree/main/src/web-server/stacks/smoothsick)
+* **🐳 Docker Hub:** [devstoni/smoothsick-api](https://hub.docker.com/repository/docker/devstoni/smoothsick-api/general)
+
+La aplicación dispone de repositorio público en Docker Hub, desde donde se va versionando para obtener el paquete en producción.

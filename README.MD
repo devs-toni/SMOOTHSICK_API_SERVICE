@@ -70,6 +70,19 @@ Los commits seguirán la siguiente convención:
 
 ---
 
+## Entorno de Desarrollo
+Para poder lanzar el proyecto, se requiere configurar las siguientes variables de entorno antes del arranque:
+
+* `NODE_ENV=production`
+* `PORT=4000`
+* `DB_URI=uri`
+* `CLOUDINARY_NAME=name`
+* `CLOUDINARY_KEY=key`
+* `CLOUDINARY_SECRET=secret`
+* `FRONT_URI=http://host:port`
+* `MIGRATIONS_URI="path/to/migrations/files"`
+* `JWT_SECRET=jwtSecret`
+
 ## Generar Versión
 En caso de estar listo para sacar una nueva versión:
 1. Desplazarse a **GitHub Actions - Release**.
